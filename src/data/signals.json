@@ -1,0 +1,349 @@
+{
+  "fetchedAt": "2026-11-09T12:31:53.526Z",
+  "weather": [
+    {
+      "date": "2026-11-09",
+      "tempMax": 12.3,
+      "rainProb": 15
+    },
+    {
+      "date": "2026-11-10",
+      "tempMax": 12.8,
+      "rainProb": 60
+    },
+    {
+      "date": "2026-11-11",
+      "tempMax": 11.2,
+      "rainProb": 9
+    },
+    {
+      "date": "2026-11-12",
+      "tempMax": 10.1,
+      "rainProb": 90
+    },
+    {
+      "date": "2026-11-13",
+      "tempMax": 15,
+      "rainProb": 70
+    },
+    {
+      "date": "2026-11-14",
+      "tempMax": 11.2,
+      "rainProb": 38
+    },
+    {
+      "date": "2026-11-15",
+      "tempMax": 10.7,
+      "rainProb": 3
+    }
+  ],
+  "holidays": [
+    {
+      "date": "2026-01-01",
+      "name": "Capodanno"
+    },
+    {
+      "date": "2026-01-06",
+      "name": "Epifania"
+    },
+    {
+      "date": "2026-04-05",
+      "name": "Pasqua"
+    },
+    {
+      "date": "2026-04-06",
+      "name": "Lunedì dell'Angelo"
+    },
+    {
+      "date": "2026-04-25",
+      "name": "Festa della Liberazione"
+    },
+    {
+      "date": "2026-05-01",
+      "name": "Festa del Lavoro"
+    },
+    {
+      "date": "2026-05-25",
+      "name": "Lunedì di Pentecoste"
+    },
+    {
+      "date": "2026-06-02",
+      "name": "Festa della Repubblica"
+    },
+    {
+      "date": "2026-08-15",
+      "name": "Ferragosto o Assunzione"
+    },
+    {
+      "date": "2026-10-04",
+      "name": "San Francesco d'Assisi"
+    },
+    {
+      "date": "2026-11-01",
+      "name": "Tutti i Santi"
+    },
+    {
+      "date": "2026-12-08",
+      "name": "Immacolata Concezione"
+    },
+    {
+      "date": "2026-12-25",
+      "name": "Natale"
+    },
+    {
+      "date": "2026-12-26",
+      "name": "Santo Stefano"
+    },
+    {
+      "date": "2027-01-01",
+      "name": "Capodanno"
+    },
+    {
+      "date": "2027-01-06",
+      "name": "Epifania"
+    },
+    {
+      "date": "2027-03-28",
+      "name": "Pasqua"
+    },
+    {
+      "date": "2027-03-29",
+      "name": "Lunedì dell'Angelo"
+    },
+    {
+      "date": "2027-04-25",
+      "name": "Festa della Liberazione"
+    },
+    {
+      "date": "2027-05-01",
+      "name": "Festa del Lavoro"
+    },
+    {
+      "date": "2027-05-17",
+      "name": "Lunedì di Pentecoste"
+    },
+    {
+      "date": "2027-06-02",
+      "name": "Festa della Repubblica"
+    },
+    {
+      "date": "2027-08-15",
+      "name": "Ferragosto o Assunzione"
+    },
+    {
+      "date": "2027-10-04",
+      "name": "San Francesco d'Assisi"
+    },
+    {
+      "date": "2027-11-01",
+      "name": "Tutti i Santi"
+    },
+    {
+      "date": "2027-12-08",
+      "name": "Immacolata Concezione"
+    },
+    {
+      "date": "2027-12-25",
+      "name": "Natale"
+    },
+    {
+      "date": "2027-12-26",
+      "name": "Santo Stefano"
+    }
+  ],
+  "eggPrices": {
+    "period": "2025-12",
+    "value": 8.4
+  },
+  "foodWaste": {
+    "year": "2024",
+    "naceCount": 6,
+    "totalT": 57900000,
+    "retailT": 4500000,
+    "householdsT": 31000000
+  },
+  "eggs": [
+    {
+      "code": "8017596102911",
+      "name": "Uova fresche medie",
+      "brand": "Delizie del Sole",
+      "labels": []
+    },
+    {
+      "code": "8001120998620",
+      "name": "6 uova fresche biologiche",
+      "brand": "Coop, Vivi Verde",
+      "labels": [
+        "en:no-antibiotics",
+        "en:organic",
+        "en:eu-organic",
+        "en:it-bio-007"
+      ]
+    },
+    {
+      "code": "8003170034143",
+      "name": "Uova fresche da galline allevate a terra medie",
+      "brand": "Conad",
+      "labels": []
+    },
+    {
+      "code": "8008110561420",
+      "name": "Albume d’uovo",
+      "brand": "AIA",
+      "labels": [
+        "en:no-preservatives"
+      ]
+    },
+    {
+      "code": "10335208",
+      "name": "Uova fresche medie (2 uova)",
+      "brand": "Cuor di Malga",
+      "labels": []
+    },
+    {
+      "code": "20051112",
+      "name": "Albume d’Uovo Pastorizzato senza Grassi",
+      "brand": "Lidl",
+      "labels": []
+    },
+    {
+      "code": "8008110042035",
+      "name": "6 uova fresche medie pastagialla",
+      "brand": "Aia",
+      "labels": []
+    },
+    {
+      "code": "8002790008428",
+      "name": "4 uova fresche biologiche",
+      "brand": "Eurovo, Le Naturelle",
+      "labels": [
+        "en:no-antibiotics",
+        "en:organic",
+        "en:eu-organic",
+        "en:it-bio-009",
+        "en:made-in-italy"
+      ]
+    },
+    {
+      "code": "20165543",
+      "name": "Uova",
+      "brand": "Lidl",
+      "labels": []
+    },
+    {
+      "code": "8017596071293",
+      "name": "Uova fresche biologiche",
+      "brand": "Amo Essere Biologico, Eurospin",
+      "labels": [
+        "en:organic",
+        "en:eu-organic",
+        "en:it-bio-009"
+      ]
+    },
+    {
+      "code": "8001120831750",
+      "name": "10 uova grandi fresche italiane",
+      "brand": "Coop, coccodí",
+      "labels": []
+    },
+    {
+      "code": "8001120891846",
+      "name": "Uova medie fresche",
+      "brand": "Coop",
+      "labels": [
+        "en:no-antibiotics",
+        "en:fed-without-gmos",
+        "en:chickens-raised-without-antibiotics"
+      ]
+    },
+    {
+      "code": "8008110025946",
+      "name": "UOVA ARIAPERTA",
+      "brand": "Aia",
+      "labels": []
+    },
+    {
+      "code": "8010053016073",
+      "name": "6 uova Fresche Medie da Allevamento a Terra",
+      "brand": "L'uovo del Podere EUROVO",
+      "labels": []
+    },
+    {
+      "code": "4335619029149",
+      "name": "Uova Fresche Medie",
+      "brand": "Lidl",
+      "labels": []
+    },
+    {
+      "code": "4056489161219",
+      "name": "6 Uova",
+      "brand": "Buonovo",
+      "labels": [
+        "en:no-antibiotics",
+        "en:fed-without-gmos"
+      ]
+    },
+    {
+      "code": "8003170026520",
+      "name": "Uova Fresche Grandi Da Allevamento a Terra",
+      "brand": "CONAD",
+      "labels": []
+    },
+    {
+      "code": "8017596076533",
+      "name": "Uova fresche",
+      "brand": "Eurospin",
+      "labels": []
+    },
+    {
+      "code": "8003170094901",
+      "name": "Uova",
+      "brand": "Conad",
+      "labels": []
+    },
+    {
+      "code": "8030582701325",
+      "name": "Uova biologiche",
+      "brand": "Via Verde Bio Primia",
+      "labels": [
+        "en:organic",
+        "en:eu-organic",
+        "en:it-bio-007"
+      ]
+    },
+    {
+      "code": "4056489043201",
+      "name": "uova medie",
+      "brand": "Lidl, TERRA Lidl",
+      "labels": []
+    },
+    {
+      "code": "8002330001438",
+      "name": "Uova fresche medie",
+      "brand": "Esselunga",
+      "labels": [
+        "en:organic",
+        "en:eu-organic",
+        "en:fsc",
+        "en:fsc-mix",
+        "en:it-bio-009"
+      ]
+    },
+    {
+      "code": "8030582700120",
+      "name": "Uova biologiche",
+      "brand": "Primia, Via verde bio",
+      "labels": [
+        "en:organic",
+        "en:eu-organic",
+        "en:it-bio-007"
+      ]
+    },
+    {
+      "code": "8001120831743",
+      "name": "6 uova grandi extra fresche",
+      "brand": "Coop",
+      "labels": []
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "households": 600,
+  "coverage": 0.4,
+  "runs": 24,
+  "rows": [
+    {
+      "sku": "bread",
+      "wasteBefore": 0.22518085905268792,
+      "wasteAfter": 0.18234253023718958,
+      "fillBefore": 0.9933388293348894,
+      "fillAfter": 0.9949123508880532
+    },
+    {
+      "sku": "pastries",
+      "wasteBefore": 0.26907863514376096,
+      "wasteAfter": 0.2275705788720578,
+      "fillBefore": 0.9918441391207629,
+      "fillAfter": 0.9943991842120806
+    },
+    {
+      "sku": "sandwiches",
+      "wasteBefore": 0.2591506518049266,
+      "wasteAfter": 0.21528826709531887,
+      "fillBefore": 0.9928306027873727,
+      "fillAfter": 0.9944612672293015
+    },
+    {
+      "sku": "fish",
+      "wasteBefore": 0.3181844145948088,
+      "wasteAfter": 0.28141069766901844,
+      "fillBefore": 0.9906183286684933,
+      "fillAfter": 0.9929409748996673
+    },
+    {
+      "sku": "flowers",
+      "wasteBefore": 0.08316027850989428,
+      "wasteAfter": 0.05618990054176525,
+      "fillBefore": 0.9835777698764253,
+      "fillAfter": 0.9870922287881786
+    }
+  ]
+}

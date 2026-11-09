@@ -1,0 +1,622 @@
+{
+  "config": {
+    "seed": 2028,
+    "households": 2400,
+    "days": 182,
+    "warmup": 56,
+    "conversion": 0.82,
+    "foresight": 0.85,
+    "phantom": 0.05,
+    "service": 0.95
+  },
+  "runs": 12,
+  "results": [
+    {
+      "coverage": 0,
+      "wapeBefore": 0.1162890670754854,
+      "wapeAfter": 0.1162890670754854,
+      "wasteBefore": 0.03582260207439249,
+      "wasteAfter": 0.03582260207439249,
+      "fillBefore": 0.9934329122244583,
+      "fillAfter": 0.9934329122244583,
+      "perSku": [
+        {
+          "sku": "eggs",
+          "wapeBefore": 0.12446179622629966,
+          "wapeAfter": 0.12446179622629966,
+          "wasteBefore": 0,
+          "wasteAfter": 0,
+          "fillBefore": 0.9935331913496771,
+          "fillAfter": 0.9935331913496771
+        },
+        {
+          "sku": "bread",
+          "wapeBefore": 0.09232968319467832,
+          "wapeAfter": 0.09232968319467832,
+          "wasteBefore": 0.17813951531383235,
+          "wasteAfter": 0.17813951531383235,
+          "fillBefore": 0.9925781906689132,
+          "fillAfter": 0.9925781906689132
+        },
+        {
+          "sku": "milk",
+          "wapeBefore": 0.09587858138173906,
+          "wapeAfter": 0.09587858138173906,
+          "wasteBefore": 0,
+          "wasteAfter": 0,
+          "fillBefore": 0.9924865794998269,
+          "fillAfter": 0.9924865794998269
+        },
+        {
+          "sku": "pasta",
+          "wapeBefore": 0.14726110192632075,
+          "wapeAfter": 0.14726110192632075,
+          "wasteBefore": 0,
+          "wasteAfter": 0,
+          "fillBefore": 0.9946715858231294,
+          "fillAfter": 0.9946715858231294
+        },
+        {
+          "sku": "greens",
+          "wapeBefore": 0.1215141726483893,
+          "wapeAfter": 0.1215141726483893,
+          "wasteBefore": 0.0009734950581300994,
+          "wasteAfter": 0.0009734950581300994,
+          "fillBefore": 0.9938950137807447,
+          "fillAfter": 0.9938950137807447
+        }
+      ]
+    },
+    {
+      "coverage": 0.1,
+      "wapeBefore": 0.11750133571817134,
+      "wapeAfter": 0.11082855781872133,
+      "wasteBefore": 0.03601972446238223,
+      "wasteAfter": 0.03387056026793811,
+      "fillBefore": 0.9927474255274001,
+      "fillAfter": 0.9933614237999695,
+      "perSku": [
+        {
+          "sku": "eggs",
+          "wapeBefore": 0.12558906255838603,
+          "wapeAfter": 0.11795472156695487,
+          "wasteBefore": 0,
+          "wasteAfter": 0,
+          "fillBefore": 0.9931559691881614,
+          "fillAfter": 0.9936560293615857
+        },
+        {
+          "sku": "bread",
+          "wapeBefore": 0.09256590103701222,
+          "wapeAfter": 0.08669171585906173,
+          "wasteBefore": 0.1787021117226987,
+          "wasteAfter": 0.1684381668403018,
+          "fillBefore": 0.9924269569446215,
+          "fillAfter": 0.9930858956216527
+        },
+        {
+          "sku": "milk",
+          "wapeBefore": 0.09482720642434844,
+          "wapeAfter": 0.08990630641510815,
+          "wasteBefore": 0,
+          "wasteAfter": 0,
+          "fillBefore": 0.9920920903885868,
+          "fillAfter": 0.9928185892466428
+        },
+        {
+          "sku": "pasta",
+          "wapeBefore": 0.15079476087121974,
+          "wapeAfter": 0.1420749454181646,
+          "wasteBefore": 0.000013055512037182099,
+          "wasteAfter": 0,
+          "fillBefore": 0.9925512837375275,
+          "fillAfter": 0.9929805059358611
+        },
+        {
+          "sku": "greens",
+          "wapeBefore": 0.1237297476998903,
+          "wapeAfter": 0.1175150998343174,
+          "wasteBefore": 0.001383455077175282,
+          "wasteAfter": 0.0009146344993887605,
+          "fillBefore": 0.9935108273781035,
+          "fillAfter": 0.9942660988341058
+        }
+      ]
+    },
+    {
+      "coverage": 0.2,
+      "wapeBefore": 0.11781635867206304,
+      "wapeAfter": 0.10454249688299036,
+      "wasteBefore": 0.03523064725513456,
+      "wasteAfter": 0.030976249079300112,
+      "fillBefore": 0.9932077927663329,
+      "fillAfter": 0.9942825729997757,
+      "perSku": [
+        {
+          "sku": "eggs",
+          "wapeBefore": 0.12519396117017154,
+          "wapeAfter": 0.11227177476658168,
+          "wasteBefore": 0,
+          "wasteAfter": 0,
+          "fillBefore": 0.993576291050423,
+          "fillAfter": 0.994574554556921
+        },
+        {
+          "sku": "bread",
+          "wapeBefore": 0.0917388323130333,
+          "wapeAfter": 0.08004785495533136,
+          "wasteBefore": 0.17523018341628924,
+          "wasteAfter": 0.154512844586148,
+          "fillBefore": 0.9924517614135148,
+          "fillAfter": 0.9936802251883369
+        },
+        {
+          "sku": "milk",
+          "wapeBefore": 0.0957498804585782,
+          "wapeAfter": 0.08422171507555369,
+          "wasteBefore": 0,
+          "wasteAfter": 0,
+          "fillBefore": 0.9922834557033487,
+          "fillAfter": 0.9937790274430488
+        },
+        {
+          "sku": "pasta",
+          "wapeBefore": 0.1551670487160122,
+          "wapeAfter": 0.13948071812676968,
+          "wasteBefore": 0,
+          "wasteAfter": 0,
+          "fillBefore": 0.9932404406077714,
+          "fillAfter": 0.9938758970308998
+        },
+        {
+          "sku": "greens",
+          "wapeBefore": 0.1212320707025199,
+          "wapeAfter": 0.1066904214907154,
+          "wasteBefore": 0.000923052859383567,
+          "wasteAfter": 0.000368400810352561,
+          "fillBefore": 0.9944870150566069,
+          "fillAfter": 0.9955031607796717
+        }
+      ]
+    },
+    {
+      "coverage": 0.3,
+      "wapeBefore": 0.11753449788820045,
+      "wapeAfter": 0.09823821217523657,
+      "wasteBefore": 0.03600372015152381,
+      "wasteAfter": 0.029445731647210666,
+      "fillBefore": 0.9932051164011773,
+      "fillAfter": 0.9947645727597537,
+      "perSku": [
+        {
+          "sku": "eggs",
+          "wapeBefore": 0.12903957630170007,
+          "wapeAfter": 0.10800383743640884,
+          "wasteBefore": 0,
+          "wasteAfter": 0,
+          "fillBefore": 0.9933595407697745,
+          "fillAfter": 0.9952571500184583
+        },
+        {
+          "sku": "bread",
+          "wapeBefore": 0.09277592522467591,
+          "wapeAfter": 0.07452279119304399,
+          "wasteBefore": 0.17892271495699563,
+          "wasteAfter": 0.14690907752414428,
+          "fillBefore": 0.992652704728092,
+          "fillAfter": 0.9944698426447314
+        },
+        {
+          "sku": "milk",
+          "wapeBefore": 0.09385828905743133,
+          "wapeAfter": 0.07793913369594402,
+          "wasteBefore": 0,
+          "wasteAfter": 0,
+          "fillBefore": 0.9923029459501412,
+          "fillAfter": 0.9946117050320367
+        },
+        {
+          "sku": "pasta",
+          "wapeBefore": 0.1518462011443202,
+          "wapeAfter": 0.13208611013062294,
+          "wasteBefore": 0,
+          "wasteAfter": 0,
+          "fillBefore": 0.9938380029227282,
+          "fillAfter": 0.9945228080816096
+        },
+        {
+          "sku": "greens",
+          "wapeBefore": 0.12015249771287477,
+          "wapeAfter": 0.098639188420163,
+          "wasteBefore": 0.0010958858006234072,
+          "wasteAfter": 0.0003195807119090411,
+          "fillBefore": 0.99387238763515,
+          "fillAfter": 0.9949613580219326
+        }
+      ]
+    },
+    {
+      "coverage": 0.4,
+      "wapeBefore": 0.11611407589914027,
+      "wapeAfter": 0.09017213756943274,
+      "wasteBefore": 0.03593893009676924,
+      "wasteAfter": 0.02699542810902762,
+      "fillBefore": 0.9934183484478882,
+      "fillAfter": 0.9955499694032985,
+      "perSku": [
+        {
+          "sku": "eggs",
+          "wapeBefore": 0.12315543645680022,
+          "wapeAfter": 0.09665492359107096,
+          "wasteBefore": 0,
+          "wasteAfter": 0,
+          "fillBefore": 0.9939149870228161,
+          "fillAfter": 0.9957400842646953
+        },
+        {
+          "sku": "bread",
+          "wapeBefore": 0.09288716710944504,
+          "wapeAfter": 0.06827548528364201,
+          "wasteBefore": 0.1789709965824752,
+          "wasteAfter": 0.13490508850297736,
+          "fillBefore": 0.992474734322649,
+          "fillAfter": 0.994983786273833
+        },
+        {
+          "sku": "milk",
+          "wapeBefore": 0.09540038019897469,
+          "wapeAfter": 0.0740269842463381,
+          "wasteBefore": 0,
+          "wasteAfter": 0,
+          "fillBefore": 0.9930154436286506,
+          "fillAfter": 0.9954790500764138
+        },
+        {
+          "sku": "pasta",
+          "wapeBefore": 0.15041457799118862,
+          "wapeAfter": 0.12146139109955985,
+          "wasteBefore": 0,
+          "wasteAfter": 0,
+          "fillBefore": 0.9941130744051936,
+          "fillAfter": 0.995960404946938
+        },
+        {
+          "sku": "greens",
+          "wapeBefore": 0.11871281773929275,
+          "wapeAfter": 0.09044190362655273,
+          "wasteBefore": 0.0007236539013709958,
+          "wasteAfter": 0.00007205204216073781,
+          "fillBefore": 0.9935735028601324,
+          "fillAfter": 0.9955865214546128
+        }
+      ]
+    },
+    {
+      "coverage": 0.5,
+      "wapeBefore": 0.11840748146940375,
+      "wapeAfter": 0.08435390706989335,
+      "wasteBefore": 0.035540624184565106,
+      "wasteAfter": 0.024201328158423997,
+      "fillBefore": 0.9934256014043301,
+      "fillAfter": 0.9958436327310821,
+      "perSku": [
+        {
+          "sku": "eggs",
+          "wapeBefore": 0.12615321573965993,
+          "wapeAfter": 0.09173986844184008,
+          "wasteBefore": 0,
+          "wasteAfter": 0,
+          "fillBefore": 0.9934568863201779,
+          "fillAfter": 0.9956840462170148
+        },
+        {
+          "sku": "bread",
+          "wapeBefore": 0.09224822056861139,
+          "wapeAfter": 0.061351571471035315,
+          "wasteBefore": 0.1766879581557165,
+          "wasteAfter": 0.12095277657304343,
+          "fillBefore": 0.9926114433860369,
+          "fillAfter": 0.9956070927553293
+        },
+        {
+          "sku": "milk",
+          "wapeBefore": 0.09577666055370292,
+          "wapeAfter": 0.06780729877607565,
+          "wasteBefore": 0,
+          "wasteAfter": 0,
+          "fillBefore": 0.9928078955263526,
+          "fillAfter": 0.9960336913773539
+        },
+        {
+          "sku": "pasta",
+          "wapeBefore": 0.15331615698036052,
+          "wapeAfter": 0.11635910906080403,
+          "wasteBefore": 0,
+          "wasteAfter": 0,
+          "fillBefore": 0.9941958909959944,
+          "fillAfter": 0.9954589401426454
+        },
+        {
+          "sku": "greens",
+          "wapeBefore": 0.12454315350468398,
+          "wapeAfter": 0.08451168759971163,
+          "wasteBefore": 0.0010151627671090362,
+          "wasteAfter": 0.000053864219076551826,
+          "fillBefore": 0.9940558907930886,
+          "fillAfter": 0.9964343931630669
+        }
+      ]
+    },
+    {
+      "coverage": 0.6,
+      "wapeBefore": 0.11872416909250746,
+      "wapeAfter": 0.0768787172746003,
+      "wasteBefore": 0.035307262893549594,
+      "wasteAfter": 0.021287155932998916,
+      "fillBefore": 0.993740849401453,
+      "fillAfter": 0.9967200898361941,
+      "perSku": [
+        {
+          "sku": "eggs",
+          "wapeBefore": 0.1299022944296872,
+          "wapeAfter": 0.08395795423640255,
+          "wasteBefore": 0,
+          "wasteAfter": 0,
+          "fillBefore": 0.9946919263706929,
+          "fillAfter": 0.9968807325527077
+        },
+        {
+          "sku": "bread",
+          "wapeBefore": 0.0925767718040546,
+          "wapeAfter": 0.05509110180025337,
+          "wasteBefore": 0.17574560767012318,
+          "wasteAfter": 0.10643577966499458,
+          "fillBefore": 0.9927089682593847,
+          "fillAfter": 0.9966802562057714
+        },
+        {
+          "sku": "milk",
+          "wapeBefore": 0.09690815723600094,
+          "wapeAfter": 0.06344512179928312,
+          "wasteBefore": 0,
+          "wasteAfter": 0,
+          "fillBefore": 0.9929375037967029,
+          "fillAfter": 0.9965534457614322
+        },
+        {
+          "sku": "pasta",
+          "wapeBefore": 0.1526225653797757,
+          "wapeAfter": 0.10757572947816978,
+          "wasteBefore": 0,
+          "wasteAfter": 0,
+          "fillBefore": 0.9942551171808157,
+          "fillAfter": 0.9968139538026758
+        },
+        {
+          "sku": "greens",
+          "wapeBefore": 0.1216110566130189,
+          "wapeAfter": 0.07432367905889267,
+          "wasteBefore": 0.0007907067976247886,
+          "wasteAfter": 0,
+          "fillBefore": 0.9941107313996685,
+          "fillAfter": 0.9966720608583833
+        }
+      ]
+    }
+  ],
+  "sensitivity": [
+    {
+      "label": "pessimistic",
+      "foresight": 0.6,
+      "phantom": 0.15,
+      "conversion": 0.65,
+      "result": {
+        "coverage": 0.4,
+        "wapeBefore": 0.11895381547887789,
+        "wapeAfter": 0.10535080008887968,
+        "wasteBefore": 0.03616271961696689,
+        "wasteAfter": 0.031097477271750235,
+        "fillBefore": 0.9935382981498935,
+        "fillAfter": 0.9948503896842134,
+        "perSku": [
+          {
+            "sku": "eggs",
+            "wapeBefore": 0.125540291229791,
+            "wapeAfter": 0.11243195366272653,
+            "wasteBefore": 0,
+            "wasteAfter": 0,
+            "fillBefore": 0.9941882804059321,
+            "fillAfter": 0.9952575829141943
+          },
+          {
+            "sku": "bread",
+            "wapeBefore": 0.09404798835318488,
+            "wapeAfter": 0.0814307747650546,
+            "wasteBefore": 0.18004387445643064,
+            "wasteAfter": 0.15536482891413064,
+            "fillBefore": 0.9926020902579188,
+            "fillAfter": 0.9942436291134052
+          },
+          {
+            "sku": "milk",
+            "wapeBefore": 0.09817968225876089,
+            "wapeAfter": 0.08727340299251003,
+            "wasteBefore": 0,
+            "wasteAfter": 0,
+            "fillBefore": 0.993077780319473,
+            "fillAfter": 0.9948294051600907
+          },
+          {
+            "sku": "pasta",
+            "wapeBefore": 0.15542466575089772,
+            "wapeAfter": 0.13949725309513997,
+            "wasteBefore": 0,
+            "wasteAfter": 0,
+            "fillBefore": 0.9943409187742839,
+            "fillAfter": 0.9953640618637851
+          },
+          {
+            "sku": "greens",
+            "wapeBefore": 0.12157644980175498,
+            "wapeAfter": 0.10612061592896728,
+            "wasteBefore": 0.0007697236284037907,
+            "wasteAfter": 0.0001225574446205313,
+            "fillBefore": 0.9934824209918592,
+            "fillAfter": 0.9945572693695911
+          }
+        ]
+      },
+      "bread": {
+        "sku": "bread",
+        "wapeBefore": 0.09404798835318488,
+        "wapeAfter": 0.0814307747650546,
+        "wasteBefore": 0.18004387445643064,
+        "wasteAfter": 0.15536482891413064,
+        "fillBefore": 0.9926020902579188,
+        "fillAfter": 0.9942436291134052
+      }
+    },
+    {
+      "label": "base",
+      "foresight": 0.85,
+      "phantom": 0.05,
+      "conversion": 0.82,
+      "result": {
+        "coverage": 0.4,
+        "wapeBefore": 0.11611407589914027,
+        "wapeAfter": 0.09017213756943274,
+        "wasteBefore": 0.03593893009676924,
+        "wasteAfter": 0.02699542810902762,
+        "fillBefore": 0.9934183484478882,
+        "fillAfter": 0.9955499694032985,
+        "perSku": [
+          {
+            "sku": "eggs",
+            "wapeBefore": 0.12315543645680022,
+            "wapeAfter": 0.09665492359107096,
+            "wasteBefore": 0,
+            "wasteAfter": 0,
+            "fillBefore": 0.9939149870228161,
+            "fillAfter": 0.9957400842646953
+          },
+          {
+            "sku": "bread",
+            "wapeBefore": 0.09288716710944504,
+            "wapeAfter": 0.06827548528364201,
+            "wasteBefore": 0.1789709965824752,
+            "wasteAfter": 0.13490508850297736,
+            "fillBefore": 0.992474734322649,
+            "fillAfter": 0.994983786273833
+          },
+          {
+            "sku": "milk",
+            "wapeBefore": 0.09540038019897469,
+            "wapeAfter": 0.0740269842463381,
+            "wasteBefore": 0,
+            "wasteAfter": 0,
+            "fillBefore": 0.9930154436286506,
+            "fillAfter": 0.9954790500764138
+          },
+          {
+            "sku": "pasta",
+            "wapeBefore": 0.15041457799118862,
+            "wapeAfter": 0.12146139109955985,
+            "wasteBefore": 0,
+            "wasteAfter": 0,
+            "fillBefore": 0.9941130744051936,
+            "fillAfter": 0.995960404946938
+          },
+          {
+            "sku": "greens",
+            "wapeBefore": 0.11871281773929275,
+            "wapeAfter": 0.09044190362655273,
+            "wasteBefore": 0.0007236539013709958,
+            "wasteAfter": 0.00007205204216073781,
+            "fillBefore": 0.9935735028601324,
+            "fillAfter": 0.9955865214546128
+          }
+        ]
+      },
+      "bread": {
+        "sku": "bread",
+        "wapeBefore": 0.09288716710944504,
+        "wapeAfter": 0.06827548528364201,
+        "wasteBefore": 0.1789709965824752,
+        "wasteAfter": 0.13490508850297736,
+        "fillBefore": 0.992474734322649,
+        "fillAfter": 0.994983786273833
+      }
+    },
+    {
+      "label": "optimistic",
+      "foresight": 0.95,
+      "phantom": 0.02,
+      "conversion": 0.9,
+      "result": {
+        "coverage": 0.4,
+        "wapeBefore": 0.11500809224535571,
+        "wapeAfter": 0.08447126943394925,
+        "wasteBefore": 0.03580631570343407,
+        "wasteAfter": 0.025468435859344628,
+        "fillBefore": 0.9934834752911825,
+        "fillAfter": 0.9958082252391997,
+        "perSku": [
+          {
+            "sku": "eggs",
+            "wapeBefore": 0.12185214602436006,
+            "wapeAfter": 0.08998722876265926,
+            "wasteBefore": 0,
+            "wasteAfter": 0,
+            "fillBefore": 0.993929721872698,
+            "fillAfter": 0.9958423034633325
+          },
+          {
+            "sku": "bread",
+            "wapeBefore": 0.09244648674859024,
+            "wapeAfter": 0.06398490023447834,
+            "wasteBefore": 0.17832688865801397,
+            "wasteAfter": 0.12730236641725665,
+            "fillBefore": 0.9924819341541052,
+            "fillAfter": 0.9953421490999513
+          },
+          {
+            "sku": "milk",
+            "wapeBefore": 0.09381209730379775,
+            "wapeAfter": 0.06900996802308366,
+            "wasteBefore": 0,
+            "wasteAfter": 0,
+            "fillBefore": 0.9929477822591188,
+            "fillAfter": 0.9957789373277546
+          },
+          {
+            "sku": "pasta",
+            "wapeBefore": 0.1486698581741539,
+            "wapeAfter": 0.11420696427789633,
+            "wasteBefore": 0,
+            "wasteAfter": 0,
+            "fillBefore": 0.9942636088707445,
+            "fillAfter": 0.99600287366929
+          },
+          {
+            "sku": "greens",
+            "wapeBefore": 0.11825987297587659,
+            "wapeAfter": 0.08516728587162871,
+            "wasteBefore": 0.0007046898591563921,
+            "wasteAfter": 0.000039812879466507416,
+            "fillBefore": 0.9937943292992468,
+            "fillAfter": 0.9960748626356694
+          }
+        ]
+      },
+      "bread": {
+        "sku": "bread",
+        "wapeBefore": 0.09244648674859024,
+        "wapeAfter": 0.06398490023447834,
+        "wasteBefore": 0.17832688865801397,
+        "wasteAfter": 0.12730236641725665,
+        "fillBefore": 0.9924819341541052,
+        "fillAfter": 0.9953421490999513
+      }
+    }
+  ]
+}
