@@ -4,6 +4,7 @@ import { EuropeMap, ITALY, type Level, type MapHandle } from '../components/Euro
 import { CountTo, NextButton, SPRING } from '../components/parts';
 import europe from '../data/europe.json';
 import { SHOP_EXAMPLES } from '../data/examples';
+import { WHY_NOW } from '../data/sources';
 import { shopTomorrow } from '../lib/forecast';
 import { useFridayRain } from '../lib/weather';
 
@@ -78,9 +79,12 @@ export function Home() {
           <blockquote>“I let ChatGPT’s new ‘agent’ manage my life. It spent $31 on a dozen eggs.”</blockquote>
           <figcaption>The Washington Post, 2025</figcaption>
         </motion.figure>
-        <h1>In 2028, AI assistants do the weekly shopping.</h1>
-        <p className="lead">Your assistant knows what you want to buy. The shop does not know how much to prepare. Nexi connects the two, and keeps your money safe.</p>
-        <NextButton href="#/order">See how it works</NextButton>
+        <h1>In 2028, AI agents pay on their own.</h1>
+        <p className="lead">An AI agent knows what it will buy. The shop does not know how much to prepare. Nexi connects the two, and keeps the money safe.</p>
+        <NextButton href="#/customers">Start with the customers</NextButton>
+        <dl className="why-now">
+          {WHY_NOW.map((s) => <div key={s.figure}><dt>{s.figure}</dt><dd>{s.claim}. <i>{s.publisher}</i></dd></div>)}
+        </dl>
       </div>
     </div>
   );

@@ -29,6 +29,16 @@ export function NexiLogo({ className = '' }: { className?: string }) {
   return <span role="img" aria-label="Nexi" className={`nexi-logo ${className}`} />;
 }
 
+export function PersonaCard({ persona }: { persona: { name: string; role: string; need: string } }) {
+  return (
+    <aside className="persona">
+      <b>{persona.name}</b>
+      <span>{persona.role}</span>
+      <p>{persona.need}</p>
+    </aside>
+  );
+}
+
 export function Examples({ items, value, onChange }: { items: { id: string; label: string }[]; value: string; onChange: (id: string) => void }) {
   return (
     <div className="examples" role="group" aria-label="Choose an example">

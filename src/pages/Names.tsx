@@ -1,12 +1,17 @@
 import { AnimatePresence, motion } from 'motion/react';
-import { useState } from 'react';
-import { Examples, Facts, NexiLogo, NextButton, TAP } from '../components/parts';
+import { useEffect, useState } from 'react';
+import { Examples, Facts, NexiLogo, NextButton, PersonaCard, TAP } from '../components/parts';
 import { PRIVACY_EXAMPLES, type PrivacyExample } from '../data/examples';
-import { questionsFor, reply } from '../lib/wall';
+import { PERSONAS } from '../data/personas';
+import { bundles, categories, MIN_GROUP, questionsFor, reply, wantedNow } from '../lib/wall';
 
-function Demo({ example }: { example: PrivacyExample }) {
+const STEPS = ['AI agents send orders to Nexi.', 'Nexi removes names and budgets.', `Nexi adds up groups of ${MIN_GROUP} or more.`, 'Each party gets only its bundle.'];
+const NEVER = ['Names', 'Budgets', 'Supplier names', 'Single purchases', `Groups under ${MIN_GROUP}`];
+
+function Demo({ example, tick }: { example: PrivacyExample; tick: number }) {
   const [id, setId] = useState<string | null>(null);
-  const questions = questionsFor(example);
+  const wanted = wantedNow(example, tick);
+  const questions = questionsFor(example, wanted);
   const question = questions.find((q) => q.id === id);
   const answer = question ? reply(question) : null;
   const shake = (field: 'name' | 'money') => (answer?.hides === field ? { x: [0, -8, 8, -5, 5, 0] } : { x: 0 });
@@ -25,9 +30,19 @@ function Demo({ example }: { example: PrivacyExample }) {
         <div className="wall-line"><span><NexiLogo /></span></div>
         <section className="side shop">
           <h2>What the {example.shop} sees</h2>
-          <p className="shop-count">{example.seen}</p>
+          <p className="shop-count">{example.seen.replace(/\d+/, String(Math.round(wanted / 5) * 5))}</p>
           <p className="fine">No names. No budgets.</p>
         </section>
+      </div>
+
+      <div className="bundles">
+        {bundles(example, tick).map((b) => (
+          <article key={b.party}>
+            <h2>{b.party}</h2>
+            <p className="fine">{b.channel}. Refresh: {b.refresh.toLowerCase()}.</p>
+            <dl>{b.fields.map((f) => <div key={f.label}><dt>{f.label}</dt><dd>{f.value}</dd></div>)}</dl>
+          </article>
+        ))}
       </div>
 
       <div className="ask">
@@ -51,22 +66,40 @@ function Demo({ example }: { example: PrivacyExample }) {
 
 export function Names() {
   const [id, setId] = useState(PRIVACY_EXAMPLES[0].id);
+  const [tick, setTick] = useState(0);
+  useEffect(() => {
+    const timer = setInterval(() => setTick((t) => t + 1), 3000);
+    return () => clearInterval(timer);
+  }, []);
   const example = PRIVACY_EXAMPLES.find((e) => e.id === id)!;
   return (
     <div className="page">
       <header className="page-head">
-        <p className="eyebrow">Feature 3 of 3</p>
-        <h1>The shop sees numbers, not names.</h1>
-        <p className="lead">Customers share what they want to buy. Nexi removes who they are.</p>
+        <p className="eyebrow">Deep dive</p>
+        <h1>Live data, no names.</h1>
+        <p className="lead">AI agents share what they want to buy. Nexi removes who they are, and sells only the totals.</p>
       </header>
-
+      <PersonaCard persona={PERSONAS.analyst} />
       <Examples items={PRIVACY_EXAMPLES} value={id} onChange={setId} />
-      <Demo key={id} example={example} />
+      <Demo key={id} example={example} tick={tick} />
 
-      <Facts uses="An anonymous survey: the result has no names." forWhom="Shop owners and their customers." solves="The shop gets the count. The customer keeps their privacy." />
+      <section className="log">
+        <h2>Demand across categories <span className="live">Live</span></h2>
+        <table className="grid-table small">
+          <thead><tr><th>Category</th><th>Wanted</th><th>Buying speed</th><th>Average price</th><th>Against last week</th><th>Customers</th></tr></thead>
+          <tbody>{categories(PRIVACY_EXAMPLES, tick).map((c) => <tr key={c.id}><td>{c.label}</td><td>{c.wanted}</td><td>{c.speed}</td><td>{c.price}</td><td>{c.trend}</td><td>{c.customers}</td></tr>)}</tbody>
+        </table>
+      </section>
+
+      <div className="privacy">
+        <section><h2>How it stays private</h2><ol>{STEPS.map((s) => <li key={s}>{s}</li>)}</ol></section>
+        <section><h2>Never in any bundle</h2><ul>{NEVER.map((s) => <li key={s}>{s}</li>)}</ul></section>
+      </div>
+
+      <Facts uses="An anonymous survey: the result has no names." forWhom="Shops, banks and market analysts." solves="Live demand data. Customers keep their privacy." />
       <footer className="page-foot">
-        <p className="fine">{example.person} is a made-up customer.</p>
-        <NextButton href="#/">Back to the start</NextButton>
+        <p className="fine">{example.person} is a made-up customer. The live feed is simulated.</p>
+        <NextButton href="#/sources">Next: sources</NextButton>
       </footer>
     </div>
   );

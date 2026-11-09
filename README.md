@@ -6,9 +6,17 @@ Prototype for the ESCP Turin hackathon, sponsor Nexi. This is a student concept 
 
 The homepage is a dot map that zooms from Europe to Italy to the streets of Torino. Each feature has several examples to pick from.
 
-1. **How much to prepare (main feature).** Shopping lists become one number for the shop.
-2. **Spending limit.** Every payment from an AI assistant is checked before the money moves.
-3. **Numbers, not names.** A shop gets a count. It cannot get names, budgets or small groups.
+## Demo flow
+
+1. **Customers** (`#/customers`). Ten named customers sign mandates. Nexi holds 240 in all.
+2. **Supplier** (`#/supplier`). The supplier sees demand by price, and no names.
+3. **Offer** (`#/offer`). Nexi checks one offer against every mandate and matches it.
+
+## Deep dives
+
+- **Spending limit** (`#/limit`). A full mandate, one-time tokens, a price check and an audit log.
+- **How much to prepare** (`#/order`). Agent orders become one number. Includes a merchant agent.
+- **Live data, no names** (`#/names`). Bundles for shops, banks and market analysts.
 
 ## Run
 
