@@ -448,7 +448,10 @@ function Receipt({
 }) {
   const payment = state.payments.find((p) => p.proposalId === proposal.id);
   const passed = proposal.policy.rules.filter((r) => r.passed).length;
-  const offers = proposal.scenario === "weekly_basket" ? state.offers : [];
+  const offers =
+    proposal.scenario === "weekly_basket"
+      ? state.offers.filter((o) => ["offer-a", "offer-b", "offer-c"].includes(o.id))
+      : [];
   return (
     <div>
       <div className="row">

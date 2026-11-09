@@ -1,36 +1,37 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+﻿# Agent Control
 
-## Getting Started
+Student hackathon concept for Nexi (ESCP Turin, 9 November 2026). This is not a Nexi product or partnership.
 
-First, run the development server:
+A person grants an AI agent limited authority to buy essentials. The agent only proposes purchases. Rules in Postgres decide whether each purchase is allowed.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## What is real and what is simulated
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+| Part | Status |
+|---|---|
+| Rules, reservations, idempotency, revocation, audit log | Real, in Postgres |
+| Agent planner | Deterministic script, labelled in the interface |
+| Payment provider | Simulated, labelled in the interface |
+| Provider callback check | Real HMAC verification of a simulated provider's message |
+| Merchants, offers, Elena, pay event, pharmacy request | Synthetic, labelled in the interface |
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+This prototype makes no claim of AP2 compliance, legal compliance, production security, or general fraud prevention. The audit log is append-only at application level. It is not cryptographic proof.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Run
 
-## Learn More
+1. Copy `.env.example` to `.env.local` and fill in the values.
+2. Run `npm install`, then `npm run dev`.
+3. Run the tests with `npm test`.
 
-To learn more about Next.js, take a look at the following resources:
+Set `NEXT_PUBLIC_UI_PREVIEW=1` to run the interface on local fixture data with no database. The header then shows "UI preview: gate not connected".
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Environment variables
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+`SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY`, `NEXI_GATEWAY_SECRET`, `PROVIDER_WEBHOOK_SECRET`.
 
-## Deploy on Vercel
+## Limitations
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Revocation cannot recall a payment after submission has started.
+- The simulator buttons drive events. There is no continuously running background agent.
+- Sessions are per browser, with no login.
+- If a server call stops between the gate decision and submission, the reservation stays held until the session is reset.
+- The specification is in `.plans/hackathon-spec.md`. Test results are in `tests/TEST_LOG.md`.

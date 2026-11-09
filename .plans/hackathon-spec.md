@@ -150,9 +150,9 @@ Each attack creates its own throwaway seeded session with an active mandate, so 
 
 ## 9. Environment variables (names only)
 
-`DATABASE_URL`, `PROVIDER_WEBHOOK_SECRET`.
+`SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY`, `NEXI_GATEWAY_SECRET`, `PROVIDER_WEBHOOK_SECRET`.
 
-The server connects with the `postgres` package, using `prepare: false` and `max: 1`, for the Supabase transaction pooler.
+The server calls one Postgres function over HTTPS, `public.nexi_gateway`. The function requires a server-only secret and dispatches only to the `nexi.api_*` functions. The original plan used a direct pooler connection, but the pooler timed out from the build network. Each gateway call is one Postgres transaction.
 
 ## 10. Acceptance tests
 
