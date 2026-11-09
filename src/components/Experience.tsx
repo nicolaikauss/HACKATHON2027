@@ -8,6 +8,7 @@ import type {
   AttackResult,
   DemoState,
 } from "@/lib/contracts";
+import { previewCall, uiPreview } from "@/lib/previewBackend";
 import { Phone } from "./Phone";
 import { Rail } from "./Rail";
 
@@ -18,6 +19,7 @@ const modeLabel = {
 } as const;
 
 async function call<T>(url: string, body?: unknown): Promise<T> {
+  if (uiPreview) return previewCall(url, (body ?? {}) as Record<string, unknown>) as T;
   const res = await fetch(url, {
     method: body === undefined && url === "/api/state" ? "GET" : "POST",
     headers: { "content-type": "application/json" },
@@ -109,6 +111,7 @@ export function Experience() {
           <small>Student concept for Nexi. Not a Nexi product.</small>
         </div>
         <div style={{ flex: 1 }} />
+        {uiPreview && <span className="badge">UI preview: gate not connected</span>}
         <span className="badge solid">{state ? modeLabel[state.mode] : "Simulated payments"}</span>
         <span className="badge">Synthetic offers</span>
         <span className="badge">Scripted planner</span>

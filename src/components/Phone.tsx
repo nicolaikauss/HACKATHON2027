@@ -393,7 +393,10 @@ function ExceptionView({
 }) {
   const failed = proposal.policy.rules.filter((r) => !r.passed);
   const passed = proposal.policy.rules.length - failed.length;
-  const headline = [...failed].sort((a) => (a.code === "balance_above_buffer" ? -1 : 1));
+  const headline = [...failed].sort(
+    (a, b) =>
+      Number(b.code === "balance_above_buffer") - Number(a.code === "balance_above_buffer"),
+  );
   return (
     <div>
       <span className="badge">Simulated incoming request</span>
