@@ -225,14 +225,17 @@ export function Film() {
   const scene = SCENES[index];
   const local = time - STARTS[index];
 
-  // The recorded voice, when it exists: public/voice/<scene>.mp3. Without it, the browser reads the line.
+  // The recorded voice, when it exists: public/voice/<scene>.mp3 or .wav. Without it, the browser reads the line.
   useEffect(() => {
-    for (const s of SCENES) {
-      const url = `/voice/${s.id}.mp3`;
-      void fetch(url, { method: 'HEAD' }).then((res) => {
-        if (res.ok && res.headers.get('content-type')?.startsWith('audio')) files.current.set(s.id, new Audio(url));
-      }).catch(() => undefined);
-    }
+    const find = async (id: string) => {
+      for (const ext of ['mp3', 'wav']) {
+        const url = `/voice/${id}.${ext}`;
+        const res = await fetch(url, { method: 'HEAD' }).catch(() => null);
+        if (res?.ok && res.headers.get('content-type')?.startsWith('audio')) return url;
+      }
+      return null;
+    };
+    for (const s of SCENES) void find(s.id).then((url) => { if (url) files.current.set(s.id, new Audio(url)); });
   }, []);
 
   useEffect(() => {

@@ -23,7 +23,7 @@ Student concept for the ESCP Turin hackathon. Not a Nexi product. All customers 
 ## Version 2: the product film (about 1 minute 30)
 
 The film is a page: `#/film`. Each scene is code in `src/pages/Film.tsx`, and the voice-over line of a scene is its `line`. Edit the line there, and this table after it.
-To use a recorded voice, save one file for each scene as `public/voice/<scene>.mp3`. Without a file, the browser reads the line.
+To use a recorded voice, save one file for each scene as `public/voice/<scene>.mp3` (or `.wav`). Without a file, the browser reads the line.
 
 | Scene | File name | Voice-over |
 |---|---|---|
