@@ -5,6 +5,7 @@ import { SOURCES } from './data/sources';
 import { act } from './lib/store';
 import { Agent } from './pages/Agent';
 import { Demo, type Role } from './pages/Demo';
+import { Film } from './pages/Film';
 import { Home } from './pages/Home';
 
 const ROLES: { hash: string; role: Role; label: string }[] = [
@@ -47,6 +48,8 @@ export function App() {
 
   const role = ROLES.find((r) => r.hash === route.path)?.role;
   const page = role ? <Demo role={role} join={route.query.has('join')} /> : route.path === '#/demo' ? <Demo /> : route.path === '#/agent' ? <Agent /> : route.path === '#/sources' ? <Sources /> : <Home />;
+
+  if (route.path === '#/film') return <Film />;
 
   return (
     <MotionConfig reducedMotion="user">

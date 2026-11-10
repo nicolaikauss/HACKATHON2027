@@ -33,7 +33,7 @@ function remember(who: string, phase: Phase) {
 }
 
 /** The rules of one customer in one shop, as short labels. The tiles and the chat card share them. */
-function rulesOf(me: Person, shops: number, focus: string) {
+export function rulesOf(me: Person, shops: number, focus: string) {
   const m = marketOf(focus);
   const r = me.mandate;
   return [
@@ -45,7 +45,7 @@ function rulesOf(me: Person, shops: number, focus: string) {
   ] as const;
 }
 
-function Decision({ e, open, onAnswer }: { e: Seen; open: boolean; onAnswer: (text: string) => void }) {
+export function Decision({ e, open, onAnswer }: { e: Seen; open: boolean; onAnswer: (text: string) => void }) {
   const test = e.hop === 'test';
   const stopped = e.outcome === 'stopped' || e.outcome === 'declined';
   // A stopped test is good news: the rules held.

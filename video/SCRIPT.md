@@ -19,3 +19,20 @@ Student concept for the ESCP Turin hackathon. Not a Nexi product. All customers 
 | 13 | Proof | Every payment gets a one-time token: one shop, one amount, ten minutes. Every decision goes in an audit log, with the rule that made it. | Token. Audit log. |
 | 14 | Responsibility | So responsibility is clear. You set the rules. The agent acts inside them. Nexi enforces them. And you can revoke the mandate at any time. | You. Agent. Nexi. |
 | 15 | Close | In 2028, payments can be invisible. The rules stay in your hands. Nexi. | Logo and disclaimer. |
+
+## Version 2: the product film (about 1 minute 30)
+
+The film is a page: `#/film`. Each scene is code in `src/pages/Film.tsx`, and the voice-over line of a scene is its `line`. Edit the line there, and this table after it.
+To use a recorded voice, save one file for each scene as `public/voice/<scene>.mp3`. Without a file, the browser reads the line.
+
+| Scene | File name | Voice-over |
+|---|---|---|
+| 2028 | `hook` | It is 2028. Your AI agent does the shopping. So who checks what it pays? |
+| Sara | `sara` | This is Sara. She lives in Torino. On Friday she buys bread. On Saturday, flowers. |
+| Set up | `setup` | With Nexi, Sara sets up her agent in one minute. Which shops it can use. The most it can pay. A weekly budget. And when it must ask her first. |
+| Voice | `voice` | Then she just talks. Buy two loaves. Nexi runs seven checks, always in the same order. All seven pass. Paid, with a one-time token. |
+| Ask first | `ask` | Flowers cost more. So her agent asks first. Sara says yes. |
+| Attacks | `attack` | Now a fake agent tries to pay. Then an unknown shop. A price ten times higher. A payment at three in the morning. Nexi stops all four. No money moves. |
+| Stop | `stop` | And one word stops everything. Stop. |
+| The shop | `shop` | The bakery wins too. It sees four hundred and forty-six loaves wanted for Friday. No names. No budgets. It bakes three hundred and fifty, and sells every one. |
+| Close | `close` | You set the rules. Your agent acts inside them. Nexi checks every payment. Your AI agent pays. Your rules decide. |
