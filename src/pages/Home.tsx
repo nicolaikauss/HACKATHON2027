@@ -36,6 +36,7 @@ export function Home() {
   const shop = SHOP_EXAMPLES.find((e) => e.id === shopId)!;
 
   return (
+    <>
     <div className="home">
       <div className="home-map">
         <EuropeMap
@@ -82,10 +83,13 @@ export function Home() {
         <h1>In 2028, AI agents pay on their own.</h1>
         <p className="lead">An AI agent knows what it will buy. The shop does not know how much to prepare. Nexi connects the two, and keeps the money safe.</p>
         <NextButton href="#/customers">Start with the customers</NextButton>
-        <dl className="why-now">
-          {WHY_NOW.map((s) => <div key={s.figure}><dt>{s.figure}</dt><dd>{s.claim}. <i>{s.publisher}</i></dd></div>)}
-        </dl>
       </div>
     </div>
+    <section className="why-section" aria-label="Why now">
+      <dl className="why-now">
+        {WHY_NOW.map((s) => <div key={s.figure}><dt>{s.figure}</dt><dd>{s.claim}. <i>{s.publisher}</i></dd></div>)}
+      </dl>
+    </section>
+    </>
   );
 }
