@@ -77,9 +77,9 @@ const SCENES: Scene[] = [
       </div>
     ),
   },
-  { id: 'sara', title: 'Sara', dur: 8, line: 'This is Sara. She lives in Torino. On Friday she buys bread. On Saturday, flowers.', View: MapScene },
+  { id: 'sara', title: 'Sara', dur: 9, line: 'This is Sara. She lives in Torino. On Friday she buys bread. On Saturday, flowers.', View: MapScene },
   {
-    id: 'setup', title: 'Set up', dur: 11.5,
+    id: 'setup', title: 'Set up', dur: 12,
     line: 'With Nexi, Sara sets up her agent in one minute. Which shops it can use. The most it can pay. A weekly budget. And when it must ask her first.',
     View: ({ t }) => (
       <div className="f-split">
@@ -100,14 +100,14 @@ const SCENES: Scene[] = [
     ),
   },
   {
-    id: 'voice', title: 'Voice', dur: 11,
+    id: 'voice', title: 'Voice', dur: 12.8,
     line: 'Then she just talks. Buy two loaves. Nexi runs seven checks, always in the same order. All seven pass. Paid, with a one-time token.',
     View: ({ t }) => (
       <div className="f-split">
         <div className="f-chat">
           <Show at={0.2} t={t}><p className="f-eyebrow">Then she just talks</p></Show>
           <Show at={1.4} t={t}><You>Buy two loaves.</You></Show>
-          <Show at={7} t={t}><Card e={S.bread} /></Show>
+          <Show at={8.6} t={t}><Card e={S.bread} /></Show>
         </div>
         <div className="f-checks">
           <Show at={3} t={t}><p className="f-eyebrow">Nexi checks every payment</p><Checks entry={S.bread} /></Show>
@@ -116,7 +116,7 @@ const SCENES: Scene[] = [
     ),
   },
   {
-    id: 'ask', title: 'Ask first', dur: 8,
+    id: 'ask', title: 'Ask first', dur: 7.4,
     line: 'Flowers cost more. So her agent asks first. Sara says yes.',
     View: ({ t }) => (
       <div className="f-split">
@@ -131,18 +131,18 @@ const SCENES: Scene[] = [
     ),
   },
   {
-    id: 'attack', title: 'Attacks', dur: 12.5,
+    id: 'attack', title: 'Attacks', dur: 15.6,
     line: 'Now a fake agent tries to pay. Then an unknown shop. A price ten times higher. A payment at three in the morning. Nexi stops all four. No money moves.',
     View: ({ t }) => (
       <div className="f-stack">
         <Show at={0.2} t={t}><h2>Now someone tries to cheat.</h2></Show>
-        <div className="f-grid">{S.tests.map((e, i) => <Show key={e.n} at={1.6 + i * 1.9} t={t}><Card e={e} /></Show>)}</div>
-        <Show at={9.6} t={t} className="f-stamp"><Icon name="shield" size={44} />4 of 4 stopped. No money moved.</Show>
+        <div className="f-grid">{S.tests.map((e, i) => <Show key={e.n} at={1.8 + i * 2.4} t={t}><Card e={e} /></Show>)}</div>
+        <Show at={11.8} t={t} className="f-stamp"><Icon name="shield" size={44} />4 of 4 stopped. No money moved.</Show>
       </div>
     ),
   },
   {
-    id: 'stop', title: 'Stop', dur: 6,
+    id: 'stop', title: 'Stop', dur: 5,
     line: 'And one word stops everything. Stop.',
     View: ({ t }) => (
       <div className="f-center">
@@ -155,7 +155,7 @@ const SCENES: Scene[] = [
     ),
   },
   {
-    id: 'shop', title: 'The shop', dur: 12.5,
+    id: 'shop', title: 'The shop', dur: 13,
     line: 'The bakery wins too. It sees four hundred and forty-six loaves wanted for Friday. No names. No budgets. It bakes three hundred and fifty, and sells every one.',
     View: ({ t }) => {
       const most = Math.max(...S.levels.map((l) => l.units), 1);
@@ -183,7 +183,7 @@ const SCENES: Scene[] = [
     },
   },
   {
-    id: 'close', title: 'Close', dur: 10,
+    id: 'close', title: 'Close', dur: 10.8,
     line: 'You set the rules. Your agent acts inside them. Nexi checks every payment. Your AI agent pays. Your rules decide.',
     View: ({ t }) => (
       <div className="f-center">

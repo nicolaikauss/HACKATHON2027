@@ -25,6 +25,8 @@ Student concept for the ESCP Turin hackathon. Not a Nexi product. All customers 
 The film is a page: `#/film`. Each scene is code in `src/pages/Film.tsx`, and the voice-over line of a scene is its `line`. Edit the line there, and this table after it.
 To use a recorded voice, save one file for each scene as `public/voice/<scene>.mp3` (or `.wav`). Without a file, the browser reads the line.
 
+Voice: Higgsfield Seed Audio, preset "Archie" (bd072316-f77c-588b-b6e5-e46b9b03d008), speech rate +8, mp3 44.1 kHz.
+
 | Scene | File name | Voice-over |
 |---|---|---|
 | 2028 | `hook` | It is 2028. Your AI agent does the shopping. So who checks what it pays? |
