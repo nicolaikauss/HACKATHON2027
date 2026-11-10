@@ -10,6 +10,8 @@ export type MapHandle = { fly: (level: Level) => void };
 type Props = {
   country: number;
   shop: string;
+  /** Shops that the customer's agent may not use. They show as closed to the agent. */
+  off?: string[];
   onLevel: (level: Level) => void;
   onCountry: (index: number | null) => void;
   onShop: (id: string, open: boolean) => void;
@@ -278,7 +280,7 @@ export const EuropeMap = forwardRef<MapHandle, Props>(function EuropeMap(props, 
     ctx.globalCompositeOperation = 'source-over';
 
     const hits: Hit[] = [];
-    const pill = (px: number, py: number, text: string, side: 'left' | 'right', loud: boolean, alpha: number, hit?: Hit['kind'], id?: string) => {
+    const pill = (px: number, py: number, text: string, side: 'left' | 'right', loud: boolean, alpha: number, hit?: Hit['kind'], id?: string, off = false) => {
       if (alpha < 0.02 || px < -200 || py < -30 || px > w + 200 || py > h + 30) return;
       ctx.globalAlpha = alpha;
       ctx.font = '600 17px "DM Sans Variable", sans-serif';
@@ -289,11 +291,11 @@ export const EuropeMap = forwardRef<MapHandle, Props>(function EuropeMap(props, 
       ctx.beginPath();
       ctx.arc(px, py, 6, 0, Math.PI * 2);
       ctx.fill();
-      ctx.fillStyle = loud ? '#f4ee2b' : '#ffffff';
+      ctx.fillStyle = off ? '#fbe5e0' : loud ? '#f4ee2b' : '#ffffff';
       ctx.beginPath();
       ctx.roundRect(left, top, tw, 34, 17);
       ctx.fill();
-      ctx.fillStyle = '#17161f';
+      ctx.fillStyle = off ? '#c42a1a' : '#17161f';
       ctx.textBaseline = 'middle';
       ctx.fillText(text, left + 13, top + 18);
       ctx.globalAlpha = 1;
@@ -310,7 +312,11 @@ export const EuropeMap = forwardRef<MapHandle, Props>(function EuropeMap(props, 
       }
     }
     if (a3 > 0.02) {
-      for (const shop of SHOPS) pill(sx(shop.at[0]), sy(shop.at[1]), `${shop.area}: ${shop.shop}`, shop.side, shop.id === active, a3, 'shop', shop.id);
+      const off = latest.current.off ?? [];
+      for (const shop of SHOPS) {
+        const closed = off.includes(shop.id);
+        pill(sx(shop.at[0]), sy(shop.at[1]), closed ? `${shop.shop}: not allowed` : `${shop.area}: ${shop.shop}`, shop.side, shop.id === active, a3, 'shop', shop.id, closed);
+      }
     }
     st.hits = hits;
   };

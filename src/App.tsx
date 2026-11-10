@@ -1,8 +1,9 @@
 import { AnimatePresence, motion, MotionConfig } from 'motion/react';
 import { useEffect, useState } from 'react';
-import { NexiLogo } from './components/parts';
+import { Icon, NexiLogo } from './components/parts';
 import { SOURCES } from './data/sources';
 import { act } from './lib/store';
+import { Agent } from './pages/Agent';
 import { Demo, type Role } from './pages/Demo';
 import { Home } from './pages/Home';
 
@@ -45,7 +46,7 @@ export function App() {
   }, [market]);
 
   const role = ROLES.find((r) => r.hash === route.path)?.role;
-  const page = role ? <Demo role={role} join={route.query.has('join')} /> : route.path === '#/demo' ? <Demo /> : route.path === '#/sources' ? <Sources /> : <Home />;
+  const page = role ? <Demo role={role} join={route.query.has('join')} /> : route.path === '#/demo' ? <Demo /> : route.path === '#/agent' ? <Agent /> : route.path === '#/sources' ? <Sources /> : <Home />;
 
   return (
     <MotionConfig reducedMotion="user">
@@ -55,6 +56,7 @@ export function App() {
           <a href="#/" className="brand" aria-label="Nexi, go to the start"><NexiLogo /></a>
           <div className="top-links">
             {ROLES.map((r) => <a key={r.hash} href={r.hash} aria-current={route.path === r.hash ? 'page' : undefined}>{r.label}</a>)}
+            <a href="#/agent" className="cta me" aria-current={route.path === '#/agent' ? 'page' : undefined}><Icon name="mic" size={18} />My agent</a>
             <a href="#/demo" className="cta" aria-current={route.path === '#/demo' ? 'page' : undefined}>Live demo</a>
           </div>
         </nav>

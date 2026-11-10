@@ -3,7 +3,7 @@
 import { useSyncExternalStore } from 'react';
 import { initialWorld, marketOf, reduce, type Action, type World } from './world';
 
-const KEY = 'nexi.world.v2';
+const KEY = 'nexi.world.v3';
 const listeners = new Set<() => void>();
 const channel = typeof BroadcastChannel === 'undefined' ? null : new BroadcastChannel(KEY);
 let mode: 'browser' | 'network' = 'browser';
@@ -13,7 +13,7 @@ let joinUrl = '';
 function load(): World {
   try {
     const saved = JSON.parse(localStorage.getItem(KEY) ?? 'null') as World | null;
-    if (saved?.markets?.[saved.market]?.people) return saved;
+    if (saved?.markets?.[saved.market]?.asks) return saved;
   } catch { /* storage can be blocked: start fresh */ }
   return initialWorld();
 }

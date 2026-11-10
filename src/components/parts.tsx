@@ -20,6 +20,12 @@ const ICONS = {
   lock: 'M5 11h14v10H5zM8 11V7a4 4 0 0 1 8 0v4',
   phone: 'M7 2h10a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zM11 18h2',
   reset: 'M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5',
+  mic: 'M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3zM19 10v2a7 7 0 0 1-14 0v-2M12 19v3',
+  stop: 'M7 7h10v10H7z',
+  volume: 'M11 5 6 9H2v6h4l5 4zM15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14',
+  mute: 'M11 5 6 9H2v6h4l5 4zM22 9l-6 6M16 9l6 6',
+  chat: 'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z',
+  down: 'M6 9l6 6 6-6',
   eyeoff: 'M2 2l20 20M6.7 6.7C4 8.3 2 12 2 12s3.6 7 10 7c1.9 0 3.5-.5 5-1.3M10 5.2c.6-.1 1.3-.2 2-.2 6.4 0 10 7 10 7s-.7 1.4-2 3M9.9 9.9a3 3 0 0 0 4.2 4.2',
 } as const;
 export type IconName = keyof typeof ICONS;

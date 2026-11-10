@@ -80,6 +80,7 @@ export type MarketState = {
   people: Person[];
   offer: Offer | null;
   attempts: Record<string, Entry>;
+  asks: Record<string, Entry>;
   supply: Entry | null;
   history: (Offer & { peopleUnits: number })[];
   inputCents: number;
@@ -94,13 +95,14 @@ export type Action =
   | { type: 'reset' }
   | { type: 'market'; id: string }
   | { type: 'join'; id: string; name: string }
-  | { type: 'rules'; who: string; patch: RulesPatch }
-  | { type: 'answer'; who: string; approve: boolean }
+  | { type: 'rules'; who: string; patch: RulesPatch; market?: string }
+  | { type: 'answer'; who: string; approve: boolean; market?: string }
+  | { type: 'buy'; who: string; qty?: number; market?: string }
   | { type: 'offer'; priceCents: number; capacity: number }
   | { type: 'merchantRules'; limitCents: number }
   | { type: 'inputPrice'; cents: number }
   | { type: 'close' }
-  | { type: 'test'; who: string; kind: TestKind };
+  | { type: 'test'; who: string; kind: TestKind; market?: string };
 
 export const inputNeed = (m: Market, capacity: number) => Math.ceil(capacity * m.perUnit);
 const firstMandate = (m: Market): Mandate => ({ revoked: false, limitCents: m.baseCents, weeklyCents: m.baseCents * 6, shops: [m.shop], askAboveCents: null, hoursOnly: true });
@@ -112,7 +114,7 @@ function firstState(m: Market): MarketState {
       const s = pool(m)[i];
       return { id: `p${i}`, name, live: false, qty: s.qty, agent: agentKey(name), spentCents: 0, mandate: { ...seedMandate(s, m), hoursOnly: true, askAboveCents: i === 1 ? m.baseCents : null } };
     }),
-    offer: null, attempts: {}, supply: null, history: [], inputCents: m.inputCents, log: [],
+    offer: null, attempts: {}, asks: {}, supply: null, history: [], inputCents: m.inputCents, log: [],
     merchant: { spentCents: 0, mandate: { revoked: false, limitCents: m.inputCents + 2 * m.inputStep, weeklyCents: inputNeed(m, m.capacity) * m.inputCents * 5, shops: [m.supplier], askAboveCents: null, hoursOnly: false } },
   };
 }
@@ -151,6 +153,23 @@ function evaluate(seq: number, ms: MarketState, m: Market, p: Person, approved =
   if (!prev || prev.outcome !== entry.outcome || prev.rule !== entry.rule) record(ms, entry);
 }
 
+/** A direct order at the usual price, when no offer is live. An order that waits for the owner stays in `asks`. */
+function order(seq: number, ms: MarketState, m: Market, p: Person, open?: Entry) {
+  const qty = open?.qty ?? p.qty;
+  const d = decide(p.mandate, { shop: m.shop, cents: m.baseCents, qty, ...NOON }, p.spentCents, !!open);
+  const entry: Entry = {
+    n: seq, round: ms.round, hop: 'shop', who: p.id, name: p.name, agent: p.agent, what: `${plural(qty, m)} at the ${m.shop.toLowerCase()}`,
+    qty, unitCents: m.baseCents, totalCents: qty * m.baseCents, outcome: d.outcome, rule: d.rule, ruleName: d.ruleName, reason: d.reason, token: null,
+  };
+  if (entry.outcome === 'paid') {
+    p.spentCents += entry.totalCents;
+    entry.token = issueToken(m.shop, entry.totalCents, `${seq}:${p.id}`);
+  }
+  if (entry.outcome === 'ask') ms.asks[p.id] = entry;
+  else delete ms.asks[p.id];
+  record(ms, entry);
+}
+
 export const TESTS: Record<TestKind, { label: string; what: string; change: (p: Purchase) => Purchase }> = {
   fake: { label: 'A fake agent', what: 'Test: an unsigned agent tries to pay', change: (p) => ({ ...p, signed: false }) },
   shop: { label: 'An unknown shop', what: 'Test: a payment to an unknown web shop', change: (p) => ({ ...p, shop: 'Unknown web shop' }) },
@@ -181,7 +200,10 @@ export function reduce(world: World, action: unknown): World {
     return { ...world, seq, markets };
   }
 
-  const m = marketOf(world.market);
+  // An agent can act in any shop. The other actions use the shop that the demo shows.
+  const scope = 'market' in a && a.market !== undefined ? a.market : world.market;
+  if (!MARKETS.some((x) => x.id === scope)) return world;
+  const m = marketOf(scope);
   const ms = structuredClone(world.markets[m.id]);
   const next: World = { ...world, seq, markets: { ...world.markets, [m.id]: ms } };
   const person = 'who' in a ? ms.people.find((p) => p.id === a.who) : undefined;
@@ -202,13 +224,29 @@ export function reduce(world: World, action: unknown): World {
       return next;
     }
     case 'answer': {
-      const open = person && ms.attempts[person.id];
+      const direct = person && ms.attempts[person.id]?.outcome !== 'ask';
+      const open = person && (direct ? ms.asks[person.id] : ms.attempts[person.id]);
       if (!person || open?.outcome !== 'ask') return world;
+      if (direct) {
+        if (a.approve === true) order(seq, ms, m, person, open);
+        else {
+          delete ms.asks[person.id];
+          record(ms, { ...open, n: seq, outcome: 'declined', ruleName: 'You said no', reason: 'You did not approve this payment.' });
+        }
+        return next;
+      }
       if (a.approve === true) evaluate(seq, ms, m, person, true);
       else {
         ms.attempts[person.id] = { ...open, n: seq, outcome: 'declined', ruleName: 'You said no', reason: 'You did not approve this payment.' };
         record(ms, ms.attempts[person.id]);
       }
+      return next;
+    }
+    case 'buy': {
+      if (!person) return world;
+      if ('qty' in a) person.qty = num(a.qty, 1, m.maxQty, person.qty);
+      if (ms.offer) evaluate(seq, ms, m, person);
+      else order(seq, ms, m, person);
       return next;
     }
     case 'offer': {

@@ -52,8 +52,11 @@ export function Home() {
           <h1>Your AI agent pays. <em>Your rules decide.</em></h1>
           <p className="lead">Nexi checks every agent payment against the rules you set. Shops learn how much to prepare. They never learn who you are.</p>
           <div className="cta-row">
-            <motion.a {...TAP} className="btn primary" href="#/demo">Open the live demo<Icon name="arrow" /></motion.a>
-            <button className="btn ghost" onClick={() => document.getElementById('how')?.scrollIntoView({ behavior: 'smooth' })}>How it works</button>
+            <motion.a {...TAP} className="btn primary" href="#/agent"><Icon name="mic" />Talk to your agent</motion.a>
+            <motion.a {...TAP} className="btn ghost" href="#/demo">Open the live demo</motion.a>
+          </div>
+          <div className="cta-row minor">
+            <button className="link" onClick={() => document.getElementById('how')?.scrollIntoView({ behavior: 'smooth' })}>How it works</button>
           </div>
         </div>
 
