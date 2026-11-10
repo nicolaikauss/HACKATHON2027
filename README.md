@@ -1,47 +1,45 @@
-# Nexi hackathon concept
+# Nexi agent payments: hackathon concept
 
-Prototype for the ESCP Turin hackathon, sponsor Nexi. This is a student concept and not a Nexi product. All customers are made up.
+Student concept for the ESCP Turin hackathon. It is not a Nexi product. All customers and shops are made up.
 
-## Features
+In 2028, AI agents buy for people. This demo shows one market with three sides. Nexi sits between them and checks every payment against a mandate.
 
-The homepage is a dot map that zooms from Europe to Italy to the streets of Torino. Each feature has several examples to pick from.
-
-## Demo flow
-
-1. **Customers** (`#/customers`). Ten named customers sign mandates. Nexi holds 240 in all.
-2. **Supplier** (`#/supplier`). The supplier sees demand by price, and no names.
-3. **Offer** (`#/offer`). Nexi checks one offer against every mandate and matches it.
-
-## Deep dives
-
-- **Spending limit** (`#/limit`). A full mandate, one-time tokens, a price check and an audit log.
-- **How much to prepare** (`#/order`). Agent orders become one number. Includes a merchant agent.
-- **Live data, no names** (`#/names`). Bundles for shops, banks and market analysts.
-
-## Run
+## Run it
 
 ```bash
 npm install
 npm run dev
 ```
 
-The app runs on port 3900.
+Open http://localhost:3900. The dev server also keeps the demo state, so every device on the same Wi-Fi shares one market. On the Live demo page, select **Join by phone** to show a QR code. A phone that scans it joins as a customer.
 
-## Test
+`npm run build` makes a static site in `dist`. A static host has no shared server. There, the tabs of one browser share the state.
 
-```bash
-npm test
-```
+## Pages
 
-## Data
+| Route | What it shows |
+|---|---|
+| `#/` | Landing page: the map, three steps, and a door to each side |
+| `#/demo` | Customer, Nexi, merchant and supplier on one screen |
+| `#/customer` | One customer: the rules, the agent, the last decisions |
+| `#/merchant` | The shop: demand at each price, one offer, the result |
+| `#/supplier` | The supplier: one total, one price |
 
-- `src/lib/forecast.ts` holds the simulation. The results are not from real shops.
-- `npm run shops` recalculates the shop examples. Only goods that spoil within a day or two are used, because other goods sell before they spoil.
-- `npm run signals` updates the free data in `src/data/signals.json`.
-- `npm run europe` rebuilds the map from Natural Earth, Eurostat (food waste per person) and OpenStreetMap (Torino streets).
-- The main feature reads live weather from Open-Meteo. If the request fails, the page uses the saved data.
-- The map gestures in `src/lib/gestures.ts` are copied from `maed/src/ui/gestures.ts`.
+## How a day runs
 
-## Video
+1. Customers set rules: quantity, price limit, weekly budget, ask-first amount, allowed shop, daytime only. They can revoke the mandate.
+2. The merchant sees totals from all mandates. Groups under 50 customers stay hidden.
+3. The merchant publishes one offer. First the merchant's agent buys supplies from the supplier, under the merchant's own limit. If that payment stops, the offer does not go live.
+4. Every customer agent answers the offer. Nexi runs seven checks in a fixed order. The first check that fails decides. A paid order gets a one-time token.
+5. The merchant closes the day. Weekly budgets carry over to the next day.
 
-`video/` holds the first Remotion draft. It shows the old story and must be rebuilt on the three features.
+## Code
+
+- `src/lib/guard.ts`: the mandate rules (`decide`) and the order of the checks.
+- `src/lib/world.ts`: the shared state, the actions (`reduce`) and what each side can see.
+- `src/lib/store.ts`: sync, through the local server or between browser tabs.
+- `vite.config.ts`: the local sync server (`/api/world`, `/api/act`, `/api/events`).
+- `src/views/`: the customer, merchant, supplier and Nexi panels.
+- `tests/nexi.test.ts`: 32 tests. Run `npm test`.
+
+The local server accepts actions from any device on the network, with no login. Use it only for the demo.

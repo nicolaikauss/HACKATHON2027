@@ -1,6 +1,6 @@
 // One dot map, from Europe down to the streets of Torino. Gestures match the Marsad map.
 import { forwardRef, useEffect, useImperativeHandle, useRef, type PointerEvent as ReactPointerEvent } from 'react';
-import { SHOP_EXAMPLES } from '../data/examples';
+import { MARKETS } from '../lib/world';
 import europe from '../data/europe.json';
 import zoomData from '../data/zoom.json';
 import { FOLLOW, Glide, notch, safariPinch, SCROLL_ZOOM, STEP as NOTCH, wheelReader } from '../lib/gestures';
@@ -58,7 +58,7 @@ const CITIES = [
   { id: 'napoli', name: 'Napoli', lon: 14.27, lat: 40.85, side: 'right' as const },
   { id: 'palermo', name: 'Palermo', lon: 13.36, lat: 38.12, side: 'left' as const },
 ].map((c) => ({ ...c, at: toWorld(c.lon, c.lat) }));
-const SHOPS = SHOP_EXAMPLES.map((s) => ({ ...s, at: toWorld(s.lon, s.lat) }));
+const SHOPS = MARKETS.map((s) => ({ ...s, at: toWorld(s.lon, s.lat) }));
 const TORINO = toWorld(7.68, 45.07);
 
 const FITS: Record<Level, { x: number; y: number; w: number; h: number } | null> = {
