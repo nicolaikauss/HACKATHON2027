@@ -6,7 +6,8 @@ import zoomData from '../data/zoom.json';
 import { FOLLOW, Glide, notch, safariPinch, SCROLL_ZOOM, STEP as NOTCH, wheelReader } from '../lib/gestures';
 
 export type Level = 'europe' | 'italy' | 'turin';
-export type MapHandle = { fly: (level: Level) => void };
+/** `ms` sets the length of the flight; without it, the length follows the zoom change. */
+export type MapHandle = { fly: (level: Level, ms?: number) => void };
 type Props = {
   country: number;
   shop: string;
@@ -105,7 +106,7 @@ export const EuropeMap = forwardRef<MapHandle, Props>(function EuropeMap(props, 
     s.current.fly = null;
     s.current.glide.stop();
   };
-  const startFly = (to: { k: number; x: number; y: number }) => {
+  const startFly = (to: { k: number; x: number; y: number }, length?: number) => {
     const st = s.current;
     st.glide.stop();
     Object.assign(st.target, to);
@@ -113,14 +114,14 @@ export const EuropeMap = forwardRef<MapHandle, Props>(function EuropeMap(props, 
       Object.assign(st.view, to);
       return;
     }
-    const ms = clamp(700 + Math.abs(Math.log(to.k / st.view.k)) * 260, 700, 2100);
+    const ms = length ?? clamp(700 + Math.abs(Math.log(to.k / st.view.k)) * 260, 700, 2100);
     st.fly = { t0: performance.now(), ms, from: { ...st.view }, to: { ...to } };
   };
-  const fly = (level: Level) => {
+  const fly = (level: Level, ms?: number) => {
     const fit = FITS[level];
-    if (!fit) return startFly({ k: 1, x: W / 2, y: H / 2 });
+    if (!fit) return startFly({ k: 1, x: W / 2, y: H / 2 }, ms);
     const u = unit();
-    startFly({ k: clamp(Math.min(s.current.w / (fit.w * u), s.current.h / (fit.h * u)) * 0.92, 1, MAX_ZOOM), x: fit.x, y: fit.y });
+    startFly({ k: clamp(Math.min(s.current.w / (fit.w * u), s.current.h / (fit.h * u)) * 0.92, 1, MAX_ZOOM), x: fit.x, y: fit.y }, ms);
   };
   useImperativeHandle(ref, () => ({ fly }));
 

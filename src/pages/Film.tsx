@@ -47,7 +47,8 @@ const Bot = ({ children }: { children: ReactNode }) => <p className="f-bubble bo
 function HookScene({ t }: { t: number }) {
   const map = useRef<MapHandle>(null);
   useEffect(() => {
-    const timer = window.setTimeout(() => map.current?.fly('turin'), 700);
+    // A slow, steady flight from Europe to Torino over most of the opening line.
+    const timer = window.setTimeout(() => map.current?.fly('turin', 5200), 500);
     return () => window.clearTimeout(timer);
   }, []);
   return (
@@ -55,7 +56,7 @@ function HookScene({ t }: { t: number }) {
       <div className="f-text">
         <Show at={0.1} t={t}><p className="f-year">2028</p></Show>
         <Show at={0.4} t={t}><h2>Your AI agent<br />does the shopping.</h2></Show>
-        <Show at={2.6} t={t}><p className="f-lead">Nexi makes sure it<br /><em>follows your rules.</em></p></Show>
+        <Show at={3} t={t}><p className="f-lead">Nexi makes sure it<br /><em>follows your rules.</em></p></Show>
       </div>
       <div className="f-map"><EuropeMap ref={map} country={ITALY} shop="bread" off={['fish']} onLevel={() => undefined} onCountry={() => undefined} onShop={() => undefined} /></div>
     </div>
@@ -67,22 +68,22 @@ type Scene = { id: string; title: string; dur: number; line: string; cues: [numb
 const every = (n: number, from: number, step: number, sfx: Sfx) => Array.from({ length: n }, (_, i): [number, Sfx] => [from + i * step, sfx]);
 
 const SCENES: Scene[] = [
-  { id: 'hook', title: '2028', dur: 6, line: 'Your AI agent does the shopping now. Nexi makes sure it follows your rules.', cues: [[0.4, 'pop'], [2.6, 'pop']], View: HookScene },
+  { id: 'hook', title: '2028', dur: 7.6, line: 'Your AI agent does the shopping now, and Nexi makes sure it always follows your rules.', cues: [[0.4, 'pop'], [3, 'pop']], View: HookScene },
   {
-    id: 'setup', title: 'Set up', dur: 9,
-    line: 'Set it up in one minute. Your shops, a price limit, a weekly budget, and when it must ask you.',
-    cues: [[0.9, 'pop'], [1.6, 'pop'], ...every(5, 2.2, 0.9, 'tick')],
+    id: 'setup', title: 'Set up', dur: 9.4,
+    line: 'Setting it up takes a minute. Your shops. A price limit. A weekly budget, and when it should ask you first.',
+    cues: [[0.9, 'pop'], [1.6, 'pop'], ...every(5, 2.4, 1, 'tick')],
     View: ({ t }) => (
       <div className="f-split">
         <div className="f-text">
           <Show at={0.1} t={t}><span className="orb" /><h2>Set up in<br /><em>one minute.</em></h2></Show>
           <Show at={0.9} t={t}><Bot>Which shops can I pay?</Bot></Show>
-          <Show at={1.6} t={t}><You>The bakery and the florist.</You></Show>
-          <Show at={7.2} t={t}><p className="f-note"><Icon name="lock" size={26} />Agent {S.key}, signed at Nexi</p></Show>
+          <Show at={1.6} t={t}><You>All of them, but not the fish stall.</You></Show>
+          <Show at={7.8} t={t}><p className="f-note"><Icon name="lock" size={26} />Agent {S.key}, signed at Nexi</p></Show>
         </div>
         <ul className="f-rules">
           {S.rules.map((rule, i) => (
-            <li key={rule.step} className={t >= 2.2 + i * 0.9 ? 'on' : ''}>
+            <li key={rule.step} className={t >= 2.4 + i * 1 ? 'on' : ''}>
               <i><Icon name="check" size={24} /></i><span>{rule.label}</span><b>{rule.value}</b>
             </li>
           ))}
@@ -91,75 +92,75 @@ const SCENES: Scene[] = [
     ),
   },
   {
-    id: 'voice', title: 'Talk', dur: 5.6,
-    line: 'Then just talk. Buy two loaves. Seven checks pass. Paid.',
-    cues: [[0.6, 'pop'], ...every(7, 1.7, 0.08, 'tick'), [3.8, 'paid']],
+    id: 'voice', title: 'Talk', dur: 7.4,
+    line: 'Then, you just talk. Buy two loaves. Seven checks, all clear. Paid.',
+    cues: [[1.4, 'pop'], ...every(7, 2.8, 0.14, 'tick'), [5.4, 'paid']],
     View: ({ t }) => (
       <div className="f-split">
         <div className="f-chat">
           <Show at={0.1} t={t}><p className="f-eyebrow">Then just talk</p></Show>
-          <Show at={0.6} t={t}><You>Buy two loaves.</You></Show>
-          <Show at={3.8} t={t}><Card e={S.bread} /></Show>
+          <Show at={1.4} t={t}><You>Buy two loaves.</You></Show>
+          <Show at={5.4} t={t}><Card e={S.bread} /></Show>
         </div>
         <div className="f-checks">
-          <Show at={1.6} t={t}><p className="f-eyebrow">Nexi checks every payment</p><Checks entry={S.bread} /></Show>
+          <Show at={2.7} t={t}><p className="f-eyebrow">Nexi checks every payment</p><Checks entry={S.bread} /></Show>
         </div>
       </div>
     ),
   },
   {
-    id: 'ask', title: 'Ask first', dur: 4.4,
-    line: 'A bigger payment? It asks you first.',
-    cues: [[0.5, 'pop'], [2.4, 'pop'], [2.8, 'paid']],
+    id: 'ask', title: 'Ask first', dur: 5,
+    line: 'Something bigger? It asks you first.',
+    cues: [[0.6, 'pop'], [2.8, 'pop'], [3.3, 'paid']],
     View: ({ t }) => (
       <div className="f-split">
         <div className="f-text">
           <Show at={0.1} t={t}><h2>Above {eur(1000)},<br /><em>it asks first.</em></h2></Show>
-          <Show at={2.4} t={t}><You>Yes.</You></Show>
+          <Show at={2.8} t={t}><You>Yes.</You></Show>
         </div>
         <div className="f-chat">
-          {t < 2.8 ? <Show at={0.5} t={t}><Card e={S.ask} open /></Show> : <Show at={2.8} t={t}><Card e={S.approved} /></Show>}
+          {t < 3.3 ? <Show at={0.6} t={t}><Card e={S.ask} open /></Show> : <Show at={3.3} t={t}><Card e={S.approved} /></Show>}
         </div>
       </div>
     ),
   },
   {
-    id: 'attack', title: 'Attacks', dur: 10.8,
-    line: 'A fake agent. An unknown shop. Ten times the price. Three in the morning. All blocked. No money moves.',
-    cues: [...every(4, 0.7, 2, 'blocked'), [8.7, 'whoosh']],
+    id: 'attack', title: 'Attacks', dur: 12.4,
+    line: 'And when someone tries to cheat? A fake agent. An unknown shop. Ten times the price. Three in the morning. All blocked. Not a cent moves.',
+    cues: [...every(4, 2.4, 1.9, 'blocked'), [9.8, 'whoosh']],
     View: ({ t }) => (
       <div className="f-stack">
         <Show at={0.1} t={t}><h2>Now someone tries to cheat.</h2></Show>
-        <div className="f-grid">{S.tests.map((e, i) => <Show key={e.n} at={0.7 + i * 2} t={t}><Card e={e} /></Show>)}</div>
-        <Show at={8.7} t={t} className="f-stamp"><Icon name="shield" size={44} />4 of 4 blocked. No money moved.</Show>
+        <div className="f-grid">{S.tests.map((e, i) => <Show key={e.n} at={2.4 + i * 1.9} t={t}><Card e={e} /></Show>)}</div>
+        <Show at={9.8} t={t} className="f-stamp"><Icon name="shield" size={44} />4 of 4 blocked. No money moved.</Show>
       </div>
     ),
   },
   {
-    id: 'stop', title: 'Stop', dur: 3.6,
+    id: 'stop', title: 'Stop', dur: 4,
     line: 'And one word stops everything.',
-    cues: [[0.9, 'pop'], [1.6, 'switch']],
+    cues: [[1.2, 'pop'], [2, 'switch']],
     View: ({ t }) => (
       <div className="f-center">
         <Show at={0.1} t={t}><h2>One word stops everything.</h2></Show>
-        <Show at={0.9} t={t}><You>Stop.</You></Show>
+        <Show at={1.2} t={t}><You>Stop.</You></Show>
         <Show at={0.3} t={t}>
-          <div className={`f-switch${t >= 1.6 ? ' off' : ''}`}><span><b>{t >= 1.6 ? 'Mandate revoked' : 'Mandate active'}</b><small>{t >= 1.6 ? 'The agent cannot pay' : 'The agent pays inside the rules'}</small></span><i /></div>
+          <div className={`f-switch${t >= 2 ? ' off' : ''}`}><span><b>{t >= 2 ? 'Mandate revoked' : 'Mandate active'}</b><small>{t >= 2 ? 'The agent cannot pay' : 'The agent pays inside the rules'}</small></span><i /></div>
         </Show>
       </div>
     ),
   },
   {
-    id: 'shop', title: 'The shop', dur: 4.6,
-    line: 'Shops see what people want. Never who they are.',
-    cues: [[2.2, 'pop']],
+    id: 'shop', title: 'The shop', dur: 5.4,
+    line: 'Shops see what people want, never who they are.',
+    cues: [[2.6, 'pop']],
     View: ({ t }) => {
       const most = Math.max(...S.levels.map((l) => l.units), 1);
       return (
         <div className="f-split">
           <div className="f-text">
             <Show at={0.1} t={t}><p className="f-eyebrow">The bakery, San Salvario</p><h2>Shops see demand.<br /><em>Never names.</em></h2></Show>
-            <Show at={2.2} t={t}>
+            <Show at={2.6} t={t}>
               <dl className="f-trio">
                 <div><dt>{S.day.units}</dt><dd>loaves sold</dd></div>
                 <div><dt>{eur(S.day.cents).replace('.00', '')}</dt><dd>paid by {S.day.customers} agents</dd></div>
@@ -176,7 +177,7 @@ const SCENES: Scene[] = [
     },
   },
   {
-    id: 'close', title: 'Nexi', dur: 5.4,
+    id: 'close', title: 'Nexi', dur: 6,
     line: 'Your AI agent pays. Your rules decide. Nexi.',
     cues: [],
     View: ({ t }) => (
@@ -197,13 +198,16 @@ const sceneAt = (time: number) => {
   return 0;
 };
 
+/** `#/film?render`: no controls and no sound. A recorder drives the clock through `window.__film`. */
+const RENDER = typeof window !== 'undefined' && window.location.hash.includes('render');
+
 export function Film() {
   const frame = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(0.5);
   const [time, setTime] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [captions, setCaptions] = useState(true);
-  const [bare, setBare] = useState(false);
+  const [bare, setBare] = useState(RENDER);
   const voice = useVoice(() => undefined);
   const files = useRef(new Map<string, HTMLAudioElement>());
   const music = useRef<HTMLAudioElement | null>(null);
@@ -232,6 +236,16 @@ export function Film() {
   }, []);
 
   const VOLUME: Record<Sfx, number> = { whoosh: 0.45, paid: 0.7, blocked: 0.6, switch: 0.7, pop: 0.35, tick: 0.25 };
+  useEffect(() => {
+    if (!RENDER) return;
+    (window as unknown as { __film: unknown }).__film = {
+      total: TOTAL,
+      volumes: VOLUME,
+      scenes: SCENES.map((sc, i) => ({ id: sc.id, start: STARTS[i], dur: sc.dur, cues: sc.cues })),
+      set: (t: number) => setTime(Math.min(TOTAL, Math.max(0, t))),
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const play = (name: Sfx) => {
     const base = sfx.current.get(name);
     if (!base || !sound) return;
@@ -355,8 +369,8 @@ export function Film() {
           <div className="stage" style={stage}>
             <div className="glow" aria-hidden />
             <header className="f-top"><NexiLogo /><span>{scene.title}</span></header>
-            <AnimatePresence mode="wait">
-              <motion.div key={scene.id} className="f-scene" initial={{ opacity: 0, y: 26 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -18 }} transition={{ duration: 0.38, ease: [0.2, 0.8, 0.2, 1] }}>
+            <AnimatePresence initial={false}>
+              <motion.div key={scene.id} className="f-scene" initial={{ opacity: 0, scale: 1.02, filter: 'blur(10px)' }} animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }} exit={{ opacity: 0, scale: 0.985, filter: 'blur(10px)' }} transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}>
                 <View t={local} />
               </motion.div>
             </AnimatePresence>

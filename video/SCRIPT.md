@@ -20,19 +20,19 @@ Student concept for the ESCP Turin hackathon. Not a Nexi product. All customers 
 | 14 | Responsibility | So responsibility is clear. You set the rules. The agent acts inside them. Nexi enforces them. And you can revoke the mandate at any time. | You. Agent. Nexi. |
 | 15 | Close | In 2028, payments can be invisible. The rules stay in your hands. Nexi. | Logo and disclaimer. |
 
-## Version 3: the product demo (about 50 seconds)
+## Version 4: the product demo (about 57 seconds)
 
 The film is a page: `#/film`. Each scene is code in `src/pages/Film.tsx`; its voice-over is its `line`, and its sound effects are its `cues`.
-Voice: Higgsfield Seed Audio, preset "Archie" (bd072316-f77c-588b-b6e5-e46b9b03d008), speech rate +15, mp3 44.1 kHz, one file per scene in `public/voice/<scene>.mp3`. "Nexi" is pronounced "Nexee": write it that way in a voice prompt.
+Voice: Higgsfield, model `elevenlabs_v4`, preset "Sienna" (41023a48-71ab-478a-bea7-c7b5a78f6b36), stability 0.4, one file per scene in `public/voice/<scene>.mp3`. "Nexi" is pronounced "Nexee": write it that way in a voice prompt. "..." in a prompt gives a pause.
 Music: ElevenLabs Music v2.5 through Higgsfield, 96 s instrumental, `public/sound/music.mp3`; it fades out at the end of the film. Effects: Mirelo SFX through Higgsfield, `public/sound/<name>.mp3` (whoosh, paid, blocked, switch, pop, tick).
 
-| Scene | File name | Voice-over |
+| Scene | File name | Voice-over (as captioned) |
 |---|---|---|
-| 2028 | `hook` | Your AI agent does the shopping now. Nexi makes sure it follows your rules. |
-| Set up | `setup` | Set it up in one minute. Your shops, a price limit, a weekly budget, and when it must ask you. |
-| Talk | `voice` | Then just talk. Buy two loaves. Seven checks pass. Paid. |
-| Ask first | `ask` | A bigger payment? It asks you first. |
-| Attacks | `attack` | A fake agent. An unknown shop. Ten times the price. Three in the morning. All blocked. No money moves. |
+| 2028 | `hook` | Your AI agent does the shopping now, and Nexi makes sure it always follows your rules. |
+| Set up | `setup` | Setting it up takes a minute. Your shops. A price limit. A weekly budget, and when it should ask you first. |
+| Talk | `voice` | Then, you just talk. Buy two loaves. Seven checks, all clear. Paid. |
+| Ask first | `ask` | Something bigger? It asks you first. |
+| Attacks | `attack` | And when someone tries to cheat? A fake agent. An unknown shop. Ten times the price. Three in the morning. All blocked. Not a cent moves. |
 | Stop | `stop` | And one word stops everything. |
-| The shop | `shop` | Shops see what people want. Never who they are. |
+| The shop | `shop` | Shops see what people want, never who they are. |
 | Nexi | `close` | Your AI agent pays. Your rules decide. Nexi. |
