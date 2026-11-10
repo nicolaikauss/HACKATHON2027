@@ -38,7 +38,7 @@ function pickVoice(voices: SpeechSynthesisVoice[]) {
 }
 
 /** Amounts and keys, the way a person says them. */
-const spoken = (text: string) => text.replace(/€(\d+)\.00\b/g, '$1 euros').replace(/€(\d+)\.(\d{2})\b/g, '$1 euros $2').replace(/\b([A-Z]{2})-([0-9A-F]{4})\b/g, (_, a: string, b: string) => `${a} ${b.split('').join(' ')}`).replace(/08:00 to 20:00/g, '8 to 20 hours');
+const spoken = (text: string) => text.replace(/€(\d+)\.00\b/g, '$1 euros').replace(/€(\d+)\.(\d{2})\b/g, '$1 euros $2').replace(/\b([A-Z]{2})-([0-9A-F]{4})\b/g, (_, a: string, b: string) => `${a} ${b.split('').join(' ')}`).replace(/08:00 to 20:00/g, '8 to 20 hours').replace(/Nexi/g, 'Nexee');
 
 export type VoiceState = 'idle' | 'listening' | 'speaking';
 

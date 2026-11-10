@@ -20,21 +20,19 @@ Student concept for the ESCP Turin hackathon. Not a Nexi product. All customers 
 | 14 | Responsibility | So responsibility is clear. You set the rules. The agent acts inside them. Nexi enforces them. And you can revoke the mandate at any time. | You. Agent. Nexi. |
 | 15 | Close | In 2028, payments can be invisible. The rules stay in your hands. Nexi. | Logo and disclaimer. |
 
-## Version 2: the product film (about 1 minute 30)
+## Version 3: the product demo (about 50 seconds)
 
-The film is a page: `#/film`. Each scene is code in `src/pages/Film.tsx`, and the voice-over line of a scene is its `line`. Edit the line there, and this table after it.
-To use a recorded voice, save one file for each scene as `public/voice/<scene>.mp3` (or `.wav`). Without a file, the browser reads the line.
-
-Voice: Higgsfield Seed Audio, preset "Archie" (bd072316-f77c-588b-b6e5-e46b9b03d008), speech rate +8, mp3 44.1 kHz.
+The film is a page: `#/film`. Each scene is code in `src/pages/Film.tsx`; its voice-over is its `line`, and its sound effects are its `cues`.
+Voice: Higgsfield Seed Audio, preset "Archie" (bd072316-f77c-588b-b6e5-e46b9b03d008), speech rate +15, mp3 44.1 kHz, one file per scene in `public/voice/<scene>.mp3`. "Nexi" is pronounced "Nexee": write it that way in a voice prompt.
+Music: ElevenLabs Music v2.5 through Higgsfield, 96 s instrumental, `public/sound/music.mp3`; it fades out at the end of the film. Effects: Mirelo SFX through Higgsfield, `public/sound/<name>.mp3` (whoosh, paid, blocked, switch, pop, tick).
 
 | Scene | File name | Voice-over |
 |---|---|---|
-| 2028 | `hook` | It is 2028. Your AI agent does the shopping. So who checks what it pays? |
-| Sara | `sara` | This is Sara. She lives in Torino. On Friday she buys bread. On Saturday, flowers. |
-| Set up | `setup` | With Nexi, Sara sets up her agent in one minute. Which shops it can use. The most it can pay. A weekly budget. And when it must ask her first. |
-| Voice | `voice` | Then she just talks. Buy two loaves. Nexi runs seven checks, always in the same order. All seven pass. Paid, with a one-time token. |
-| Ask first | `ask` | Flowers cost more. So her agent asks first. Sara says yes. |
-| Attacks | `attack` | Now a fake agent tries to pay. Then an unknown shop. A price ten times higher. A payment at three in the morning. Nexi stops all four. No money moves. |
-| Stop | `stop` | And one word stops everything. Stop. |
-| The shop | `shop` | The bakery wins too. It sees four hundred and forty-six loaves wanted for Friday. No names. No budgets. It bakes three hundred and fifty, and sells every one. |
-| Close | `close` | You set the rules. Your agent acts inside them. Nexi checks every payment. Your AI agent pays. Your rules decide. |
+| 2028 | `hook` | Your AI agent does the shopping now. Nexi makes sure it follows your rules. |
+| Set up | `setup` | Set it up in one minute. Your shops, a price limit, a weekly budget, and when it must ask you. |
+| Talk | `voice` | Then just talk. Buy two loaves. Seven checks pass. Paid. |
+| Ask first | `ask` | A bigger payment? It asks you first. |
+| Attacks | `attack` | A fake agent. An unknown shop. Ten times the price. Three in the morning. All blocked. No money moves. |
+| Stop | `stop` | And one word stops everything. |
+| The shop | `shop` | Shops see what people want. Never who they are. |
+| Nexi | `close` | Your AI agent pays. Your rules decide. Nexi. |

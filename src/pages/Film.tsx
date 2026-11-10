@@ -44,54 +44,45 @@ const Card = ({ e, open = false }: { e: Seen; open?: boolean }) => <div classNam
 const You = ({ children }: { children: ReactNode }) => <p className="f-bubble you"><Icon name="mic" size={26} />{children}</p>;
 const Bot = ({ children }: { children: ReactNode }) => <p className="f-bubble bot">{children}</p>;
 
-function MapScene({ t }: { t: number }) {
+function HookScene({ t }: { t: number }) {
   const map = useRef<MapHandle>(null);
   useEffect(() => {
-    const timer = window.setTimeout(() => map.current?.fly('turin'), 900);
+    const timer = window.setTimeout(() => map.current?.fly('turin'), 700);
     return () => window.clearTimeout(timer);
   }, []);
   return (
     <div className="f-split">
       <div className="f-text">
-        <Show at={0.2} t={t}><p className="f-eyebrow">Torino, Italy</p><h2>This is Sara.</h2></Show>
-        <Show at={2.6} t={t}><p className="f-lead">Bread on Friday.<br />Flowers on Saturday.</p></Show>
-        <Show at={5} t={t}><p className="f-note">Her agent can pay at four shops. The fish stall is not on her list.</p></Show>
+        <Show at={0.1} t={t}><p className="f-year">2028</p></Show>
+        <Show at={0.4} t={t}><h2>Your AI agent<br />does the shopping.</h2></Show>
+        <Show at={2.6} t={t}><p className="f-lead">Nexi makes sure it<br /><em>follows your rules.</em></p></Show>
       </div>
       <div className="f-map"><EuropeMap ref={map} country={ITALY} shop="bread" off={['fish']} onLevel={() => undefined} onCountry={() => undefined} onShop={() => undefined} /></div>
     </div>
   );
 }
 
-type Scene = { id: string; title: string; dur: number; line: string; View: (p: { t: number }) => ReactNode };
+export type Sfx = 'whoosh' | 'paid' | 'blocked' | 'switch' | 'pop' | 'tick';
+type Scene = { id: string; title: string; dur: number; line: string; cues: [number, Sfx][]; View: (p: { t: number }) => ReactNode };
+const every = (n: number, from: number, step: number, sfx: Sfx) => Array.from({ length: n }, (_, i): [number, Sfx] => [from + i * step, sfx]);
 
 const SCENES: Scene[] = [
+  { id: 'hook', title: '2028', dur: 6, line: 'Your AI agent does the shopping now. Nexi makes sure it follows your rules.', cues: [[0.4, 'pop'], [2.6, 'pop']], View: HookScene },
   {
-    id: 'hook', title: '2028', dur: 8,
-    line: 'It is 2028. Your AI agent does the shopping. So who checks what it pays?',
-    View: ({ t }) => (
-      <div className="f-center">
-        <Show at={0.2} t={t}><p className="f-year">2028</p></Show>
-        <Show at={1.2} t={t}><h1>Your AI agent does the shopping.</h1></Show>
-        <Show at={3.4} t={t} className="f-clip"><blockquote>“I let ChatGPT’s new ‘agent’ manage my life. It spent $31 on a dozen eggs.”</blockquote><cite>The Washington Post, 2025</cite></Show>
-        <Show at={5.6} t={t}><h2 className="f-ask">So who checks what it pays?</h2></Show>
-      </div>
-    ),
-  },
-  { id: 'sara', title: 'Sara', dur: 9, line: 'This is Sara. She lives in Torino. On Friday she buys bread. On Saturday, flowers.', View: MapScene },
-  {
-    id: 'setup', title: 'Set up', dur: 12,
-    line: 'With Nexi, Sara sets up her agent in one minute. Which shops it can use. The most it can pay. A weekly budget. And when it must ask her first.',
+    id: 'setup', title: 'Set up', dur: 9,
+    line: 'Set it up in one minute. Your shops, a price limit, a weekly budget, and when it must ask you.',
+    cues: [[0.9, 'pop'], [1.6, 'pop'], ...every(5, 2.2, 0.9, 'tick')],
     View: ({ t }) => (
       <div className="f-split">
         <div className="f-text">
-          <Show at={0.2} t={t}><span className="orb" /><h2>Six questions.<br /><em>One minute.</em></h2></Show>
-          <Show at={2.2} t={t}><Bot>Which shops can I pay?</Bot></Show>
-          <Show at={3.4} t={t}><You>The bakery and the florist.</You></Show>
-          <Show at={9.4} t={t}><p className="f-note"><Icon name="lock" size={26} />Agent {S.key}, signed at Nexi</p></Show>
+          <Show at={0.1} t={t}><span className="orb" /><h2>Set up in<br /><em>one minute.</em></h2></Show>
+          <Show at={0.9} t={t}><Bot>Which shops can I pay?</Bot></Show>
+          <Show at={1.6} t={t}><You>The bakery and the florist.</You></Show>
+          <Show at={7.2} t={t}><p className="f-note"><Icon name="lock" size={26} />Agent {S.key}, signed at Nexi</p></Show>
         </div>
         <ul className="f-rules">
           {S.rules.map((rule, i) => (
-            <li key={rule.step} className={t >= 3.2 + i * 1.3 ? 'on' : ''}>
+            <li key={rule.step} className={t >= 2.2 + i * 0.9 ? 'on' : ''}>
               <i><Icon name="check" size={24} /></i><span>{rule.label}</span><b>{rule.value}</b>
             </li>
           ))}
@@ -100,100 +91,97 @@ const SCENES: Scene[] = [
     ),
   },
   {
-    id: 'voice', title: 'Voice', dur: 12.8,
-    line: 'Then she just talks. Buy two loaves. Nexi runs seven checks, always in the same order. All seven pass. Paid, with a one-time token.',
+    id: 'voice', title: 'Talk', dur: 5.6,
+    line: 'Then just talk. Buy two loaves. Seven checks pass. Paid.',
+    cues: [[0.6, 'pop'], ...every(7, 1.7, 0.08, 'tick'), [3.8, 'paid']],
     View: ({ t }) => (
       <div className="f-split">
         <div className="f-chat">
-          <Show at={0.2} t={t}><p className="f-eyebrow">Then she just talks</p></Show>
-          <Show at={1.4} t={t}><You>Buy two loaves.</You></Show>
-          <Show at={8.6} t={t}><Card e={S.bread} /></Show>
+          <Show at={0.1} t={t}><p className="f-eyebrow">Then just talk</p></Show>
+          <Show at={0.6} t={t}><You>Buy two loaves.</You></Show>
+          <Show at={3.8} t={t}><Card e={S.bread} /></Show>
         </div>
         <div className="f-checks">
-          <Show at={3} t={t}><p className="f-eyebrow">Nexi checks every payment</p><Checks entry={S.bread} /></Show>
+          <Show at={1.6} t={t}><p className="f-eyebrow">Nexi checks every payment</p><Checks entry={S.bread} /></Show>
         </div>
       </div>
     ),
   },
   {
-    id: 'ask', title: 'Ask first', dur: 7.4,
-    line: 'Flowers cost more. So her agent asks first. Sara says yes.',
+    id: 'ask', title: 'Ask first', dur: 4.4,
+    line: 'A bigger payment? It asks you first.',
+    cues: [[0.5, 'pop'], [2.4, 'pop'], [2.8, 'paid']],
     View: ({ t }) => (
       <div className="f-split">
         <div className="f-text">
-          <Show at={0.2} t={t}><h2>Above {eur(1000)},<br /><em>the agent asks first.</em></h2></Show>
-          <Show at={5.2} t={t}><You>Yes.</You></Show>
+          <Show at={0.1} t={t}><h2>Above {eur(1000)},<br /><em>it asks first.</em></h2></Show>
+          <Show at={2.4} t={t}><You>Yes.</You></Show>
         </div>
         <div className="f-chat">
-          {t < 5.8 ? <Show at={1.8} t={t}><Card e={S.ask} open /></Show> : <Show at={5.8} t={t}><Card e={S.approved} /></Show>}
+          {t < 2.8 ? <Show at={0.5} t={t}><Card e={S.ask} open /></Show> : <Show at={2.8} t={t}><Card e={S.approved} /></Show>}
         </div>
       </div>
     ),
   },
   {
-    id: 'attack', title: 'Attacks', dur: 15.6,
-    line: 'Now a fake agent tries to pay. Then an unknown shop. A price ten times higher. A payment at three in the morning. Nexi stops all four. No money moves.',
+    id: 'attack', title: 'Attacks', dur: 10.8,
+    line: 'A fake agent. An unknown shop. Ten times the price. Three in the morning. All blocked. No money moves.',
+    cues: [...every(4, 0.7, 2, 'blocked'), [8.7, 'whoosh']],
     View: ({ t }) => (
       <div className="f-stack">
-        <Show at={0.2} t={t}><h2>Now someone tries to cheat.</h2></Show>
-        <div className="f-grid">{S.tests.map((e, i) => <Show key={e.n} at={1.8 + i * 2.4} t={t}><Card e={e} /></Show>)}</div>
-        <Show at={11.8} t={t} className="f-stamp"><Icon name="shield" size={44} />4 of 4 stopped. No money moved.</Show>
+        <Show at={0.1} t={t}><h2>Now someone tries to cheat.</h2></Show>
+        <div className="f-grid">{S.tests.map((e, i) => <Show key={e.n} at={0.7 + i * 2} t={t}><Card e={e} /></Show>)}</div>
+        <Show at={8.7} t={t} className="f-stamp"><Icon name="shield" size={44} />4 of 4 blocked. No money moved.</Show>
       </div>
     ),
   },
   {
-    id: 'stop', title: 'Stop', dur: 5,
-    line: 'And one word stops everything. Stop.',
+    id: 'stop', title: 'Stop', dur: 3.6,
+    line: 'And one word stops everything.',
+    cues: [[0.9, 'pop'], [1.6, 'switch']],
     View: ({ t }) => (
       <div className="f-center">
-        <Show at={0.2} t={t}><h2>One word stops everything.</h2></Show>
-        <Show at={2} t={t}><You>Stop.</You></Show>
-        <Show at={0.8} t={t}>
-          <div className={`f-switch${t >= 3 ? ' off' : ''}`}><span><b>{t >= 3 ? 'Mandate revoked' : 'Mandate active'}</b><small>{t >= 3 ? 'The agent cannot pay' : 'The agent pays inside the rules'}</small></span><i /></div>
+        <Show at={0.1} t={t}><h2>One word stops everything.</h2></Show>
+        <Show at={0.9} t={t}><You>Stop.</You></Show>
+        <Show at={0.3} t={t}>
+          <div className={`f-switch${t >= 1.6 ? ' off' : ''}`}><span><b>{t >= 1.6 ? 'Mandate revoked' : 'Mandate active'}</b><small>{t >= 1.6 ? 'The agent cannot pay' : 'The agent pays inside the rules'}</small></span><i /></div>
         </Show>
       </div>
     ),
   },
   {
-    id: 'shop', title: 'The shop', dur: 13,
-    line: 'The bakery wins too. It sees four hundred and forty-six loaves wanted for Friday. No names. No budgets. It bakes three hundred and fifty, and sells every one.',
+    id: 'shop', title: 'The shop', dur: 4.6,
+    line: 'Shops see what people want. Never who they are.',
+    cues: [[2.2, 'pop']],
     View: ({ t }) => {
       const most = Math.max(...S.levels.map((l) => l.units), 1);
       return (
         <div className="f-split">
           <div className="f-text">
-            <Show at={0.2} t={t}><p className="f-eyebrow">The bakery, San Salvario</p><h2>The shop wins too.</h2></Show>
-            <Show at={5.4} t={t}><p className="f-note"><Icon name="eyeoff" size={26} />No names. No budgets. Only totals.</p></Show>
-            <Show at={8} t={t}>
+            <Show at={0.1} t={t}><p className="f-eyebrow">The bakery, San Salvario</p><h2>Shops see demand.<br /><em>Never names.</em></h2></Show>
+            <Show at={2.2} t={t}>
               <dl className="f-trio">
-                <div><dt>{S.day.capacity}</dt><dd>loaves baked</dd></div>
                 <div><dt>{S.day.units}</dt><dd>loaves sold</dd></div>
                 <div><dt>{eur(S.day.cents).replace('.00', '')}</dt><dd>paid by {S.day.customers} agents</dd></div>
               </dl>
             </Show>
           </div>
-          <Show at={1.8} t={t} className="f-demand">
-            <strong><CountTo value={t >= 2 ? S.want : 0} /></strong>
+          <Show at={0.5} t={t} className="f-demand">
+            <strong><CountTo value={t >= 0.6 ? S.want : 0} /></strong>
             <span>loaves wanted for Friday</span>
             <div className="mini-bars" aria-hidden>{S.levels.map((l) => <i key={l.priceCents} className={l.hidden ? 'hidden' : ''} style={{ height: `${l.hidden ? 12 : Math.max(10, (l.units / most) * 100)}%` }} />)}</div>
-            <small>Demand at each price, from {eur(S.levels[0].priceCents)} to {eur(S.levels.at(-1)!.priceCents)}</small>
           </Show>
         </div>
       );
     },
   },
   {
-    id: 'close', title: 'Close', dur: 10.8,
-    line: 'You set the rules. Your agent acts inside them. Nexi checks every payment. Your AI agent pays. Your rules decide.',
+    id: 'close', title: 'Nexi', dur: 5.4,
+    line: 'Your AI agent pays. Your rules decide. Nexi.',
+    cues: [],
     View: ({ t }) => (
       <div className="f-center">
-        {t < 5.6 ? (
-          <ol className="f-three">
-            {['You set the rules.', 'Your agent acts inside them.', 'Nexi checks every payment.'].map((text, i) => <Show key={text} at={0.3 + i * 1.7} t={t}><li><b>{i + 1}</b>{text}</li></Show>)}
-          </ol>
-        ) : (
-          <Show at={5.6} t={t} className="f-end"><NexiLogo /><h1>Your AI agent pays. <em>Your rules decide.</em></h1></Show>
-        )}
+        <Show at={0.1} t={t} className="f-end"><NexiLogo /><h1>Your AI agent pays. <em>Your rules decide.</em></h1></Show>
       </div>
     ),
   },
@@ -218,6 +206,9 @@ export function Film() {
   const [bare, setBare] = useState(false);
   const voice = useVoice(() => undefined);
   const files = useRef(new Map<string, HTMLAudioElement>());
+  const music = useRef<HTMLAudioElement | null>(null);
+  const sfx = useRef(new Map<Sfx, HTMLAudioElement>());
+  const [sound, setSound] = useState(true);
   const speaking = useRef(false);
   speaking.current = voice.state === 'speaking';
 
@@ -236,7 +227,44 @@ export function Film() {
       return null;
     };
     for (const s of SCENES) void find(s.id).then((url) => { if (url) files.current.set(s.id, new Audio(url)); });
+    music.current = Object.assign(new Audio('/sound/music.mp3'), { volume: 0.32, preload: 'auto' });
+    for (const name of ['whoosh', 'paid', 'blocked', 'switch', 'pop', 'tick'] as Sfx[]) sfx.current.set(name, Object.assign(new Audio(`/sound/${name}.mp3`), { preload: 'auto' }));
   }, []);
+
+  const VOLUME: Record<Sfx, number> = { whoosh: 0.45, paid: 0.7, blocked: 0.6, switch: 0.7, pop: 0.35, tick: 0.25 };
+  const play = (name: Sfx) => {
+    const base = sfx.current.get(name);
+    if (!base || !sound) return;
+    const one = base.cloneNode() as HTMLAudioElement;
+    one.volume = VOLUME[name];
+    void one.play().catch(() => undefined);
+  };
+  // Effects fire when the clock passes a cue. A jump does not replay the cues it skipped.
+  const lastTime = useRef(0);
+  useEffect(() => {
+    const from = lastTime.current;
+    lastTime.current = time;
+    if (!playing || time < from || time - from > 1) return;
+    SCENES.forEach((sc, i) => {
+      for (const [at, name] of sc.cues) {
+        const when = STARTS[i] + at;
+        if (when > from && when <= time) play(name);
+      }
+    });
+    if (index !== sceneAt(from) && index > 0) play('whoosh');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [time]);
+
+  // The music follows the film clock, softer while the voice speaks.
+  useEffect(() => {
+    const m = music.current;
+    if (!m) return;
+    if (!playing || !sound) { m.pause(); return; }
+    if (Math.abs(m.currentTime - time) > 0.4) m.currentTime = Math.min(time, (m.duration || 999) - 0.1);
+    const left = TOTAL - time;
+    m.volume = 0.32 * Math.min(1, Math.max(0, left / 2.5));
+    if (m.paused) void m.play().catch(() => undefined);
+  }, [time, playing, sound]);
 
   useEffect(() => {
     const fit = () => {
@@ -254,7 +282,7 @@ export function Film() {
     let raf = 0;
     let last = performance.now();
     const tick = (now: number) => {
-      const dt = Math.min(0.1, (now - last) / 1000);
+      const dt = Math.min(0.25, (now - last) / 1000);
       last = now;
       setTime((t) => {
         const at = sceneAt(t);
@@ -349,6 +377,7 @@ export function Film() {
             {SCENES.map((s, i) => <button key={s.id} aria-pressed={i === index} onClick={() => seek(STARTS[i])}>{s.title}</button>)}
           </div>
           <button className="film-btn" aria-pressed={!voice.muted} onClick={() => voice.setMuted(!voice.muted)}><Icon name={voice.muted ? 'mute' : 'volume'} size={18} />Voice</button>
+          <button className="film-btn" aria-pressed={sound} onClick={() => setSound((v) => !v)}>Music</button>
           <button className="film-btn" aria-pressed={captions} onClick={() => setCaptions((c) => !c)}>Captions</button>
           <button className="film-btn" onClick={() => setBare(true)} title="Press H to show the controls again">Hide</button>
         </div>
