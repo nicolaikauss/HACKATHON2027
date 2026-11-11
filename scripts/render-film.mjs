@@ -1,4 +1,5 @@
-// Records the film at #/film?render to video/nexi-agent-demo.mp4 (1920 × 1080, 30 fps), with its sound.
+// Records the film at #/film?render to video/nexi-agent-demo.mp4 (1920 × 1080, 30 fps), with its sound,
+// and writes a smaller copy for the landing page to public/film/.
 // The page plays in real time, so CSS, motion and the map canvas look exactly as in the browser.
 // Pictures come from the Chrome screencast; the sound is mixed by ffmpeg from the film's own cue list.
 //
@@ -14,7 +15,8 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const URL = process.argv[2] ?? 'http://localhost:3910/#/film?render';
-const OUT = join(ROOT, 'public', 'film', 'nexi-agent-demo.mp4');
+const OUT = join(ROOT, 'video', 'nexi-agent-demo.mp4'); // master, kept out of the site
+const WEB = join(ROOT, 'public', 'film', 'nexi-agent-demo.mp4'); // smaller copy the landing page plays
 const FPS = 30;
 const MUSIC = 0.32;
 
@@ -126,4 +128,5 @@ args.push(
 writeFileSync(join(work, 'filters.txt'), filters.join(';\n'));
 execFileSync('ffmpeg', args, { stdio: ['ignore', 'ignore', 'inherit'] });
 rmSync(work, { recursive: true, force: true });
-console.log(`wrote ${OUT}`);
+execFileSync('ffmpeg', ['-y', '-v', 'error', '-i', OUT, '-c:v', 'libx264', '-preset', 'slow', '-crf', '27', '-tune', 'animation', '-pix_fmt', 'yuv420p', '-c:a', 'aac', '-b:a', '128k', '-movflags', '+faststart', WEB], { stdio: 'inherit' });
+console.log(`wrote ${OUT} and ${WEB}`);
