@@ -56,6 +56,7 @@ export function Home() {
             <motion.a {...TAP} className="btn ghost" href="#/demo">Open the live demo</motion.a>
           </div>
           <div className="cta-row minor">
+            <button className="link" onClick={() => document.getElementById('film')?.scrollIntoView({ behavior: 'smooth' })}>Watch the film</button>
             <button className="link" onClick={() => document.getElementById('how')?.scrollIntoView({ behavior: 'smooth' })}>How it works</button>
           </div>
         </div>
@@ -86,6 +87,19 @@ export function Home() {
             </div>
           </div>
         </div>
+      </section>
+
+      <section className="section film-section" id="film">
+        <header className="section-head">
+          <p className="eyebrow">The film · 57 seconds</p>
+          <h2>See the agent set up, pay, ask first and stop.</h2>
+        </header>
+        <div className="film-card">
+          <video controls playsInline preload="metadata" poster="/film/poster.jpg" aria-label="Product film: Nexi agent payments, 57 seconds, with voice-over and captions">
+            <source src="/film/nexi-agent-demo.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <p className="film-note">Voice made with AI. People and shops are made up. <a className="link" href="#/film">Open the film as a live page</a></p>
       </section>
 
       <section className="section" id="how">
