@@ -14,7 +14,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const URL = process.argv[2] ?? 'http://localhost:3910/#/film?render';
-const OUT = join(ROOT, 'video', 'nexi-agent-demo.mp4');
+const OUT = join(ROOT, 'public', 'film', 'nexi-agent-demo.mp4');
 const FPS = 30;
 const MUSIC = 0.32;
 
