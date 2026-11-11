@@ -1,12 +1,15 @@
 import { AnimatePresence, motion, MotionConfig } from 'motion/react';
-import { useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { Icon, NexiLogo } from './components/parts';
 import { SOURCES } from './data/sources';
 import { act } from './lib/store';
-import { Agent } from './pages/Agent';
-import { Demo, type Role } from './pages/Demo';
-import { Film } from './pages/Film';
+import type { Role } from './pages/Demo';
 import { Home } from './pages/Home';
+
+// Only the landing page is in the first download. Each other page loads when it is opened.
+const Agent = lazy(() => import('./pages/Agent').then((m) => ({ default: m.Agent })));
+const Demo = lazy(() => import('./pages/Demo').then((m) => ({ default: m.Demo })));
+const Film = lazy(() => import('./pages/Film').then((m) => ({ default: m.Film })));
 
 const ROLES: { hash: string; role: Role; label: string }[] = [
   { hash: '#/customer', role: 'customer', label: 'Customer' },
@@ -49,7 +52,7 @@ export function App() {
   const role = ROLES.find((r) => r.hash === route.path)?.role;
   const page = role ? <Demo role={role} join={route.query.has('join')} /> : route.path === '#/demo' ? <Demo /> : route.path === '#/agent' ? <Agent /> : route.path === '#/sources' ? <Sources /> : <Home />;
 
-  if (route.path === '#/film') return <Film />;
+  if (route.path === '#/film') return <Suspense fallback={null}><Film /></Suspense>;
 
   return (
     <MotionConfig reducedMotion="user">
@@ -66,7 +69,7 @@ export function App() {
         <main>
           <AnimatePresence mode="wait">
             <motion.div key={route.path} initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.24, ease: [0.2, 0.8, 0.2, 1] }}>
-              {page}
+              <Suspense fallback={<div className="page-wait" aria-busy="true" />}>{page}</Suspense>
             </motion.div>
           </AnimatePresence>
         </main>

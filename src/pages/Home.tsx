@@ -1,6 +1,7 @@
 import { motion } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 import { EuropeMap, ITALY, type Level, type MapHandle } from '../components/EuropeMap';
+import { FilmSection } from '../components/FilmSection';
 import { CountTo, Icon, Seg, TAP, type IconName } from '../components/parts';
 import europe from '../data/europe.json';
 import { WHY_NOW } from '../data/sources';
@@ -43,6 +44,11 @@ export function Home() {
     act({ type: 'market', id });
     window.location.hash = '#/demo';
   };
+
+  useEffect(() => {
+    document.documentElement.classList.add('snap-film');
+    return () => document.documentElement.classList.remove('snap-film');
+  }, []);
 
   return (
     <>
@@ -89,18 +95,7 @@ export function Home() {
         </div>
       </section>
 
-      <section className="section film-section" id="film">
-        <header className="section-head">
-          <p className="eyebrow">The film · 57 seconds</p>
-          <h2>See the agent set up, pay, ask first and stop.</h2>
-        </header>
-        <div className="film-card">
-          <video controls playsInline preload="metadata" poster="/film/poster.jpg" aria-label="Product film: Nexi agent payments, 57 seconds, with voice-over and captions">
-            <source src="/film/nexi-agent-demo.mp4" type="video/mp4" />
-          </video>
-        </div>
-        <p className="film-note">Voice made with AI. People and shops are made up. <a className="link" href="#/film">Open the film as a live page</a></p>
-      </section>
+      <FilmSection />
 
       <section className="section" id="how">
         <header className="section-head">
