@@ -2,7 +2,6 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef, type PointerEvent as ReactPointerEvent } from 'react';
 import { MARKETS } from '../lib/world';
 import europe from '../data/europe.json';
-import zoomData from '../data/zoom.json';
 import { FOLLOW, Glide, notch, safariPinch, SCROLL_ZOOM, STEP as NOTCH, wheelReader } from '../lib/gestures';
 
 export type Level = 'europe' | 'italy' | 'turin';
@@ -46,12 +45,14 @@ const flat = (list: number[]) => {
   }
   return { xy, kind, n };
 };
-const LAYERS = [
-  { ...flat(europe.dots.flat()), spacing: europe.step },
-  { ...flat(zoomData.italy), spacing: 3.2 },
-  { ...flat(zoomData.region), spacing: 0.8 },
-  { ...flat(zoomData.turin), spacing: 0.09 },
-];
+const EMPTY = { ...flat([]), spacing: 1 };
+const LAYERS = [{ ...flat(europe.dots.flat()), spacing: europe.step }, EMPTY, EMPTY, EMPTY];
+// The Italy, region and street dots are 300 KB. They load in their own file after the page shows.
+void import('../data/zoom.json').then(({ default: zoom }) => {
+  LAYERS[1] = { ...flat(zoom.italy), spacing: 3.2 };
+  LAYERS[2] = { ...flat(zoom.region), spacing: 0.8 };
+  LAYERS[3] = { ...flat(zoom.turin), spacing: 0.09 };
+});
 
 const CITIES = [
   { id: 'torino', name: 'Torino', lon: 7.69, lat: 45.07, side: 'left' as const },
@@ -95,7 +96,7 @@ export const EuropeMap = forwardRef<MapHandle, Props>(function EuropeMap(props, 
     reduced: false,
   });
 
-  const unit = () => Math.min(s.current.w / W, s.current.h / H) * 0.97;
+  const unit = () => Math.min(s.current.w / W, s.current.h / H) * 0.9;
   const settle = () => {
     const t = s.current.target;
     t.k = clamp(t.k, 1, MAX_ZOOM);
@@ -121,7 +122,7 @@ export const EuropeMap = forwardRef<MapHandle, Props>(function EuropeMap(props, 
     const fit = FITS[level];
     if (!fit) return startFly({ k: 1, x: W / 2, y: H / 2 }, ms);
     const u = unit();
-    startFly({ k: clamp(Math.min(s.current.w / (fit.w * u), s.current.h / (fit.h * u)) * 0.92, 1, MAX_ZOOM), x: fit.x, y: fit.y }, ms);
+    startFly({ k: clamp(Math.min(s.current.w / (fit.w * u), s.current.h / (fit.h * u)) * 0.84, 1, MAX_ZOOM), x: fit.x, y: fit.y }, ms);
   };
   useImperativeHandle(ref, () => ({ fly }));
 
@@ -186,7 +187,10 @@ export const EuropeMap = forwardRef<MapHandle, Props>(function EuropeMap(props, 
     const a1 = smooth(view.k, 1.5, 2.3) * (1 - smooth(view.k, 8, 13));
     const a2 = smooth(view.k, 8, 13) * (1 - smooth(view.k, 40, 64));
     const a3 = smooth(view.k, 40, 64);
-    const alphas = [a0, a1, a2, a3];
+    // Europe stays on screen around Italy, so zooming in never looks like a cut-out.
+    const around = smooth(view.k, 1.5, 2.3) * (1 - smooth(view.k, 20, 45));
+    const europeA = Math.max(a0, around * 0.5);
+    const alphas = [Math.max(a0, around), a1, a2, a3];
 
     const { w, h, dpr } = st;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -214,7 +218,7 @@ export const EuropeMap = forwardRef<MapHandle, Props>(function EuropeMap(props, 
       const alpha = alphas[index];
       if (alpha < 0.01) return;
       const sp = layer.spacing * u;
-      const paths = { ink: new Path2D(), main: new Path2D(), hot: new Path2D(), water: new Path2D() };
+      const paths = { ink: new Path2D(), main: new Path2D(), hot: new Path2D(), water: new Path2D(), italy: new Path2D() };
       for (let i = 0; i < layer.n; i += 1) {
         const wx = layer.xy[i * 2];
         const wy = layer.xy[i * 2 + 1];
@@ -229,7 +233,7 @@ export const EuropeMap = forwardRef<MapHandle, Props>(function EuropeMap(props, 
           const country = kind >= 0 ? europe.countries[kind] : null;
           if (country && country.kg !== null) {
             r = sp * (0.17 + 0.27 * ((country.kg - KG_MIN) / (KG_MAX - KG_MIN)));
-            path = kind === selected ? paths.hot : paths.main;
+            path = kind === ITALY ? paths.italy : kind === selected ? paths.hot : paths.main;
             if (kind === selected) r *= 1.14;
           } else {
             r = sp * 0.13;
@@ -257,50 +261,67 @@ export const EuropeMap = forwardRef<MapHandle, Props>(function EuropeMap(props, 
         path.moveTo(x + r, y);
         path.arc(x, y, r, 0, Math.PI * 2);
       }
-      ctx.globalAlpha = alpha * 0.18;
+      // Layer 0 around Italy: the neighbours stay, lighter, and Italy hands over to its detail layer.
+      // Layers 1 and 2: their grey grid would draw a box around Italy, so it waits until Europe has gone.
+      const main = index === 0 ? europeA : alpha;
+      ctx.globalAlpha = index === 0 ? europeA * 0.18 : index < 3 ? alpha * 0.18 * (1 - around) : alpha * 0.18;
       ctx.fillStyle = '#17161f';
       ctx.fill(paths.ink);
-      ctx.globalAlpha = alpha;
+      ctx.globalAlpha = main;
       ctx.fillStyle = '#2d32aa';
       ctx.fill(paths.main);
       ctx.fillStyle = '#ff8d45';
       ctx.fill(paths.hot);
+      ctx.globalAlpha = a0;
+      ctx.fillStyle = selected === ITALY ? '#ff8d45' : '#2d32aa';
+      ctx.fill(paths.italy);
       ctx.globalAlpha = alpha * 0.7;
       ctx.fillStyle = '#7f9fe6';
       ctx.fill(paths.water);
     });
     ctx.globalAlpha = 1;
 
-    // The left edge fades into the page, so dots never cross the text at full strength.
-    ctx.globalCompositeOperation = 'destination-out';
-    const fade = ctx.createLinearGradient(0, 0, Math.min(150, w * 0.2), 0);
-    fade.addColorStop(0, 'rgba(0,0,0,1)');
-    fade.addColorStop(1, 'rgba(0,0,0,0)');
-    ctx.fillStyle = fade;
-    ctx.fillRect(0, 0, Math.min(150, w * 0.2), h);
-    ctx.globalCompositeOperation = 'source-over';
 
     const hits: Hit[] = [];
+    // Labels are smaller on a phone, stay clear of the card corners, and never cover each other.
+    const small = w < 520;
+    const fs = small ? 13 : 17;
+    const ph = small ? 26 : 34;
+    const placed: { x: number; y: number; w: number; h: number }[] = [];
+    const overlaps = (x: number, y: number, bw: number) => placed.some((b) => x < b.x + b.w + 4 && x + bw + 4 > b.x && y < b.y + b.h + 3 && y + ph + 3 > b.y);
     const pill = (px: number, py: number, text: string, side: 'left' | 'right', loud: boolean, alpha: number, hit?: Hit['kind'], id?: string, off = false) => {
       if (alpha < 0.02 || px < -200 || py < -30 || px > w + 200 || py > h + 30) return;
       ctx.globalAlpha = alpha;
-      ctx.font = '600 17px "DM Sans Variable", sans-serif';
-      const tw = ctx.measureText(text).width + 26;
-      const left = clamp(side === 'right' ? px + 12 : px - 12 - tw, 6, Math.max(6, w - tw - 6));
-      const top = clamp(py - 17, 6, h - 40);
+      ctx.font = `600 ${fs}px "DM Sans Variable", sans-serif`;
+      const tw = ctx.measureText(text).width + (small ? 18 : 26);
+      const at = (sd: 'left' | 'right') => clamp(sd === 'right' ? px + 10 : px - 10 - tw, 14, Math.max(14, w - tw - 14));
+      let left = at(side);
+      let top = clamp(py - ph / 2, 12, h - ph - 12);
+      if (overlaps(left, top, tw)) {
+        const other = at(side === 'right' ? 'left' : 'right');
+        if (!overlaps(other, top, tw)) left = other;
+        else {
+          for (let i = 1; i < 6 && overlaps(left, top, tw); i += 1) {
+            const down = clamp(py - ph / 2 + i * (ph + 4), 12, h - ph - 12);
+            const up = clamp(py - ph / 2 - i * (ph + 4), 12, h - ph - 12);
+            top = !overlaps(left, down, tw) ? down : up;
+          }
+        }
+      }
+      placed.push({ x: left, y: top, w: tw, h: ph });
       ctx.fillStyle = loud ? '#2d32aa' : '#ffffff';
       ctx.beginPath();
-      ctx.arc(px, py, 6, 0, Math.PI * 2);
+      ctx.arc(px, py, small ? 5 : 6, 0, Math.PI * 2);
       ctx.fill();
       ctx.fillStyle = off ? '#fbe5e0' : loud ? '#f4ee2b' : '#ffffff';
       ctx.beginPath();
-      ctx.roundRect(left, top, tw, 34, 17);
+      ctx.roundRect(left, top, tw, ph, ph / 2);
       ctx.fill();
       ctx.fillStyle = off ? '#c42a1a' : '#17161f';
       ctx.textBaseline = 'middle';
-      ctx.fillText(text, left + 13, top + 18);
+      ctx.fillText(text, left + (small ? 9 : 13), top + ph / 2 + 1);
       ctx.globalAlpha = 1;
-      if (hit && id) hits.push({ id, kind: hit, x: left, y: top, w: tw, h: 34 });
+      if (hit && id) hits.push({ id, kind: hit, x: left, y: top, w: tw, h: ph });
     };
     if (a0 > 0.02) {
       const c0 = europe.countries[selected];
@@ -314,7 +335,7 @@ export const EuropeMap = forwardRef<MapHandle, Props>(function EuropeMap(props, 
     }
     if (a3 > 0.02) {
       const off = latest.current.off ?? [];
-      for (const shop of SHOPS) {
+      for (const shop of [...SHOPS].sort((x, y) => Number(y.id === active) - Number(x.id === active))) {
         const closed = off.includes(shop.id);
         pill(sx(shop.at[0]), sy(shop.at[1]), closed ? `${shop.shop}: not allowed` : `${shop.area}: ${shop.shop}`, shop.side, shop.id === active, a3, 'shop', shop.id, closed);
       }
